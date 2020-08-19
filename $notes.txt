@@ -1,12 +1,44 @@
-export PYTHONPATH=/Users/val/python/vsc/logic-explore
+sys_exec = sys.executable
+sys_path = str(sys.path)
+cwd = os.getcwd()
 
-    ['/Users/val/python/vsc/logic-explore/nw/nw_logic',
-    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/site-packages/_pdbpp_path_hack',
-    '/Users/val/python/vsc/logic-explore',
-    '/Users/val/.pyenv/versions/3.8.3/lib/python38.zip',
-    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8',
-    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/lib-dynload',
-    '/Users/val/.local/lib/python3.8/site-packages',
-    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/site-packages',
-    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/site-packages/fab_quick_start-0.1.0-py3.8.egg']
+# https://chrisyeh96.github.io/2017/08/08/definitive-guide-python-imports.html#absolute-vs-relative-import
+print("Import INSANITY, cwd:        " + cwd)  # chrisyeh@cs.stanford.edu
+# print("Import INSANITY, sys_exec: " + sys_exec)  # its the venv python bin
+print("Import INSANITY, sys_path: " + sys_path)
+
+'''Works in pycharm
+Import INSANITY, cwd:        /Users/val/python/vsc/logic-explore
+Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic', ...
+'''
+
+'''fails in vsc using config.cwd=${workspaceFolder}, BUT same as pycharm!!
+Import INSANITY, cwd:        /Users/val/python/vsc/logic-explore
+Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic', ...
+'''
+
+''' fails as script:
+Import INSANITY, cwd:        /Users/val/python/vsc/logic-explore/nw/nw_logic
+Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic',
+                '/Users/val/.pyenv/versions/3.8.3/lib/python38.zip',
+                '/Users/val/.pyenv/versions/3.8.3/lib/python3.8',
+                '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/lib-dynload',
+                '/Users/val/python/vsc/logic-explore/venv/lib/python3.8/site-packages']
+'''
+
+from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
+
+
+update orderdetail set amount = unitPrice * quantity
+
+update "Order" set AmountTotal =
+(select sum(orderdetail.amount) from orderdetail where orderdetail.orderid = "Order".id);
+
+select id, amounttotal from "Order" where id = 11077;
+
+update Customer set Balance =
+(select sum("Order".amounttotal) from "Order" where Customer.id = "Order".customerid);
+
+update Customer set creditlimit = balance + 100;
+
 
