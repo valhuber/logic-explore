@@ -37,8 +37,13 @@ update "Order" set AmountTotal =
 select id, amounttotal from "Order" where id = 11077;
 
 update Customer set Balance =
-(select sum("Order".amounttotal) from "Order" where Customer.id = "Order".customerid);
+(select sum("Order".amounttotal) from "Order" where Customer.id = "Order".customerid
+and "Order".shippeddate is null);
 
 update Customer set creditlimit = balance + 100;
 
+830 orders, 21 not shipped
+    11045 for BOTTM (22607.7 ==> 1309.5)
+
+select id, balance, creditlimit from customer where id="BOTTM";
 
