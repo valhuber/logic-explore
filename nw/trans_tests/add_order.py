@@ -12,7 +12,8 @@ import nw.nw_logic.models as models
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 basedir = os.path.dirname(basedir)
-conn_string = "sqlite:///" + os.path.join(basedir, "nw.db")
+basedir = os.path.dirname(basedir)
+conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
 engine = sqlalchemy.create_engine(conn_string)
 
 # Create a session

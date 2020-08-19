@@ -40,10 +40,15 @@ update Customer set Balance =
 (select sum("Order".amounttotal) from "Order" where Customer.id = "Order".customerid
 and "Order".shippeddate is null);
 
+update Customer set Balance = 0 where balance is null;
+
 update Customer set creditlimit = balance + 100;
 
 830 orders, 21 not shipped
     11045 for BOTTM (22607.7 ==> 1309.5)
+    ALFKI has balance=0
 
 select id, balance, creditlimit from customer where id="BOTTM";
+
+
 
