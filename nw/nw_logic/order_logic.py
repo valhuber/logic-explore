@@ -57,8 +57,8 @@ except NoResultFound, e:
     # Deal with that as well
 '''
 
-# Add a Customer - fails
-new_cust = models.Customer(Id="$$New Cust")
+# Add a Customer - works
+new_cust = models.Customer(Id="$$New Cust", )
 session.add(new_cust)
 session.commit()
 
