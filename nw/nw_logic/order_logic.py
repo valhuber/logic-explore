@@ -7,25 +7,22 @@ import sqlalchemy
 sys_exec = sys.executable
 sys_path = str(sys.path)
 cwd = os.getcwd()
-print("Import INSANITY, cwd: " + cwd)
-print("Import INSANITY, sys_exec: " + sys_exec)
+print("Import INSANITY, cwd:        " + cwd)
+# print("Import INSANITY, sys_exec: " + sys_exec)  # its the venv python bin
 print("Import INSANITY, sys_path: " + sys_path)
 
 '''Works in pycharm
-Import INSANITY, cwd: /Users/val/python/vsc/logic-explore
-Import INSANITY, sys_exec: /Users/val/python/vsc/logic-explore/venv/bin/python
+Import INSANITY, cwd:        /Users/val/python/vsc/logic-explore
 Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic', ...
 '''
 
-'''fails in vsc ${workspaceFolder}, BUT cmd is same!!
-Import INSANITY, cwd: /Users/val/python/vsc/logic-explore
-Import INSANITY, sys_exec: /Users/val/python/vsc/logic-explore/venv/bin/python3.8
+'''fails in vsc using config.cwd=${workspaceFolder}, BUT same as pycharm!!
+Import INSANITY, cwd:        /Users/val/python/vsc/logic-explore
 Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic', ...
 '''
 
 ''' fails as script:
-Import INSANITY, cwd: /Users/val/python/vsc/logic-explore/nw/nw_logic
-Import INSANITY, sys_exec: /Users/val/python/vsc/logic-explore/venv/bin/python
+Import INSANITY, cwd:        /Users/val/python/vsc/logic-explore/nw/nw_logic
 Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic', 
                 '/Users/val/.pyenv/versions/3.8.3/lib/python38.zip', 
                 '/Users/val/.pyenv/versions/3.8.3/lib/python3.8', 
@@ -33,7 +30,7 @@ Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic',
                 '/Users/val/python/vsc/logic-explore/venv/lib/python3.8/site-packages']
 '''
 
-from logic_engine import logic
+from logic_engine import logic  # fails here
 from typing import NewType
 import nw.nw_logic.models as models
 
