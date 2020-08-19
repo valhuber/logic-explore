@@ -7,7 +7,9 @@ import sqlalchemy
 sys_exec = sys.executable
 sys_path = str(sys.path)
 cwd = os.getcwd()
-print("Import INSANITY, cwd:        " + cwd)
+
+# https://chrisyeh96.github.io/2017/08/08/definitive-guide-python-imports.html#absolute-vs-relative-import
+print("Import INSANITY, cwd:        " + cwd)  # chrisyeh@cs.stanford.edu
 # print("Import INSANITY, sys_exec: " + sys_exec)  # its the venv python bin
 print("Import INSANITY, sys_path: " + sys_path)
 
@@ -30,7 +32,7 @@ Import INSANITY, sys_path: ['/Users/val/python/vsc/logic-explore/nw/nw_logic',
                 '/Users/val/python/vsc/logic-explore/venv/lib/python3.8/site-packages']
 '''
 
-from logic_engine import logic  # fails here
+from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
 from typing import NewType
 import nw.nw_logic.models as models
 

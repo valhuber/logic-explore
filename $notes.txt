@@ -1,0 +1,12 @@
+export PYTHONPATH=/Users/val/python/vsc/logic-explore
+
+    ['/Users/val/python/vsc/logic-explore/nw/nw_logic',
+    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/site-packages/_pdbpp_path_hack',
+    '/Users/val/python/vsc/logic-explore',
+    '/Users/val/.pyenv/versions/3.8.3/lib/python38.zip',
+    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8',
+    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/lib-dynload',
+    '/Users/val/.local/lib/python3.8/site-packages',
+    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/site-packages',
+    '/Users/val/.pyenv/versions/3.8.3/lib/python3.8/site-packages/fab_quick_start-0.1.0-py3.8.egg']
+
