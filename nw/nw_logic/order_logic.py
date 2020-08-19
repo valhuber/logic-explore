@@ -2,6 +2,7 @@ import os
 
 import sqlalchemy
 
+# import logic_engine.logic
 from logic_engine import logic
 from typing import NewType
 import nw.nw_logic.models as models
@@ -45,20 +46,9 @@ engine = sqlalchemy.create_engine(conn_string)
 Session = sqlalchemy.orm.sessionmaker()
 Session.configure(bind=engine)
 session = Session()
-'''
-
-try:
-    user = session.query(User).one()
-except MultipleResultsFound, e:
-    print e
-    # Deal with it
-except NoResultFound, e:
-    print e
-    # Deal with that as well
-'''
 
 # Add a Customer - works
-new_cust = models.Customer(Id="$$New Cust", )
+new_cust = models.Customer(Id="$$New Cust1", )
 session.add(new_cust)
 session.commit()
 
