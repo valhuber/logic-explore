@@ -32,33 +32,6 @@ class OrderLogic():  # Logic class per table
         return True
 
 
-def print_msg(msg):  # This is the outer enclosing function
-
-    def printer():  # This is the nested function
-        print(msg)
-
-    return printer  # returns the nested function
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-basedir = os.path.dirname(basedir)
-conn_string = "sqlite:///" + os.path.join(basedir, "nw.db")
-engine = sqlalchemy.create_engine(conn_string)
-
-# Create a session
-Session = sqlalchemy.orm.sessionmaker()
-Session.configure(bind=engine)
-session = Session()
-
-# Add a Customer - works
-new_cust = models.Customer(Id="$$New Cust1", )
-session.add(new_cust)
-session.commit()
-
-print("\nhello worldDB, completed\n\n")
-
-another = print_msg("Hello")
-anOrder = models.Order()  # type: models.Order
-
 '''
 # each rule is an object?
     No, that seems to focus on sys internals, not user view
