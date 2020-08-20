@@ -50,5 +50,7 @@ update Customer set creditlimit = balance + 100;
 
 select id, balance, creditlimit from customer where id="BOTTM";
 
+ALFKI 6 Orders
+
 
 

@@ -22,8 +22,9 @@ Session.configure(bind=engine)
 session = Session()
 
 # Add a Customer - works
-new_cust = models.Customer(Id="$$New Cust1", )
-session.add(new_cust)
+new_order = models.Order(AmountTotal=0, CustomerId="ALFKI", ShipCity="Richmond",
+                         EmployeeId=6, Freight=1)
+session.add(new_order)
 session.commit()
 
 print("\nhello worldDB, completed\n\n")

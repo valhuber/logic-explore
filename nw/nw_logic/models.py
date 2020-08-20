@@ -29,6 +29,8 @@ class Customer(Base):
     Country = Column(String(8000))
     Phone = Column(String(8000))
     Fax = Column(String(8000))
+    Balance = Column(DECIMAL)
+    CreditLimit = Column(DECIMAL)
 
 
 class CustomerDemographic(Base):
@@ -209,6 +211,7 @@ class Order(Base):
     ShipRegion = Column(String(8000))
     ShipPostalCode = Column(String(8000))
     ShipCountry = Column(String(8000))
+    AmountTotal = Column(DECIMAL)
 
     Customer = relationship('Customer')
 
@@ -250,6 +253,7 @@ class OrderDetail(Base):
     UnitPrice = Column(DECIMAL, nullable=False)
     Quantity = Column(Integer, nullable=False)
     Discount = Column(Float, nullable=False)
+    Amount = Column(DECIMAL)
 
     Order = relationship('Order')
     Product = relationship('Product')
