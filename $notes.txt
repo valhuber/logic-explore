@@ -52,5 +52,28 @@ select id, balance, creditlimit from customer where id="BOTTM";
 
 ALFKI 6 Orders
 
+CREATE TABLE IF NOT EXISTS "OrderX"
+(
+  "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "CustomerId" VARCHAR(8000) NULL,
+  "EmployeeId" INTEGER NOT NULL,
+  "OrderDate" VARCHAR(8000) NULL,
+  "RequiredDate" VARCHAR(8000) NULL,
+  "ShippedDate" VARCHAR(8000) NULL,
+  "ShipVia" INTEGER NULL,
+  "Freight" DECIMAL NOT NULL,
+  "ShipName" VARCHAR(8000) NULL,
+  "ShipAddress" VARCHAR(8000) NULL,
+  "ShipCity" VARCHAR(8000) NULL,
+  "ShipRegion" VARCHAR(8000) NULL,
+  "ShipPostalCode" VARCHAR(8000) NULL,
+  "ShipCountry" VARCHAR(8000) NULL, AmountTotal Decimal,
+  FOREIGN KEY (CustomerId) REFERENCES Customer(Id)
+);
+
+INSERT INTO OrderX SELECT * FROM "Order";
+
+ALTER TABLE "Order" RENAME TO OrderTemp;
+ALTER TABLE "OrderX" RENAME TO "Order";
 
 

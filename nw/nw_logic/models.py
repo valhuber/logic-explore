@@ -215,6 +215,10 @@ class Order(Base):
 
     Customer = relationship('Customer')
 
+    OrderDetailList = relationship("OrderDetail",
+                                   backref="OrderHeader",
+                                   cascade_backrefs=True)
+
 
 class AbPermissionView(Base):
     __tablename__ = 'ab_permission_view'
@@ -251,11 +255,11 @@ class OrderDetail(Base):
     OrderId = Column(ForeignKey('Order.Id'), nullable=False)
     ProductId = Column(ForeignKey('Product.Id'), nullable=False)
     UnitPrice = Column(DECIMAL, nullable=False)
-    Quantity = Column(Integer, nullable=False)
+    Quantity = Column(Integer, nullable=False)s
     Discount = Column(Float, nullable=False)
     Amount = Column(DECIMAL)
 
-    Order = relationship('Order')
+    Order = relationship('Order', back_populates="OrderDetailList")
     Product = relationship('Product')
 
 

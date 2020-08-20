@@ -21,10 +21,17 @@ Session = sqlalchemy.orm.sessionmaker()
 Session.configure(bind=engine)
 session = Session()
 
-# Add a Customer - works
+# Add Order - works
 new_order = models.Order(AmountTotal=0, CustomerId="ALFKI", ShipCity="Richmond",
                          EmployeeId=6, Freight=1)
 session.add(new_order)
+
+# OrderDetails - https://docs.sqlalchemy.org/en/13/orm/backref.html
+new_item = models.OrderDetail(ProductId=1, Amount=0,
+                              Quantity=1, UnitPrice=18,
+                              Discount=0)
+new_order.OrderDetailList.append(new_item)
+
 session.commit()
 
 print("\nhello worldDB, completed\n\n")
