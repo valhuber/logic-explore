@@ -251,7 +251,7 @@ class AbUserRole(Base):
 class OrderDetail(Base):
     __tablename__ = 'OrderDetail'
 
-    Id = Column(String(8000), primary_key=True)  #, autoincrement=True)
+    Id = Column(Integer, primary_key=True)  #, autoincrement=True)
     OrderId = Column(ForeignKey('Order.Id'), nullable=False)
     ProductId = Column(ForeignKey('Product.Id'), nullable=False)
     UnitPrice = Column(DECIMAL, nullable=False)
