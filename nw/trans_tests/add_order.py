@@ -34,6 +34,6 @@ new_order.OrderDetailList.append(new_item)
 
 session.commit()
 
-print("\nhello worldDB, completed\n\n")
+print("\nadd_order, completed\n\n")
 
 anOrder = models.Order()  # type: models.Order
