@@ -255,7 +255,7 @@ class OrderDetail(Base):
     OrderId = Column(ForeignKey('Order.Id'), nullable=False)
     ProductId = Column(ForeignKey('Product.Id'), nullable=False)
     UnitPrice = Column(DECIMAL, nullable=False)
-    Quantity = Column(Integer, nullable=False)s
+    Quantity = Column(Integer, nullable=False)
     Discount = Column(Float, nullable=False)
     Amount = Column(DECIMAL)
 

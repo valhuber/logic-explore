@@ -76,4 +76,16 @@ INSERT INTO OrderX SELECT * FROM "Order";
 ALTER TABLE "Order" RENAME TO OrderTemp;
 ALTER TABLE "OrderX" RENAME TO "Order";
 
+CREATE TABLE IF NOT EXISTS "OrderDetailX"
+(
+  "Id" VARCHAR(8000) PRIMARY KEY,
+  "OrderId" INTEGER NOT NULL,
+  "ProductId" INTEGER NOT NULL,
+  "UnitPrice" DECIMAL NOT NULL,
+  "Quantity" INTEGER NOT NULL,
+  "Discount" DOUBLE NOT NULL , Amount Decimal,
+  FOREIGN KEY (OrderId) REFERENCES "Order"("Id"),
+  FOREIGN KEY (ProductId) REFERENCES Product("Id")
+);
 
+INSERT INTO OrderDetailX SELECT * FROM OrderDetail;
