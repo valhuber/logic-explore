@@ -197,7 +197,7 @@ class EmployeeTerritory(Base):
 class Order(Base):
     __tablename__ = 'Order'
 
-    Id = Column(Integer, primary_key=True)
+    Id = Column(Integer, primary_key=True, sqlite_autoincrement=True)
     CustomerId = Column(ForeignKey('Customer.Id'))
     EmployeeId = Column(Integer, nullable=False)
     OrderDate = Column(String(8000))
@@ -251,7 +251,7 @@ class AbUserRole(Base):
 class OrderDetail(Base):
     __tablename__ = 'OrderDetail'
 
-    Id = Column(String(8000), primary_key=True)
+    Id = Column(String(8000), primary_key=True, sqlite_autoincrement=True)
     OrderId = Column(ForeignKey('Order.Id'), nullable=False)
     ProductId = Column(ForeignKey('Product.Id'), nullable=False)
     UnitPrice = Column(DECIMAL, nullable=False)
