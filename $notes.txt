@@ -88,4 +88,18 @@ CREATE TABLE IF NOT EXISTS "OrderDetailX"
   FOREIGN KEY (ProductId) REFERENCES Product("Id")
 );
 
+CREATE TABLE IF NOT EXISTS "OrderDetailX"
+(
+  "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "OrderId" INTEGER NOT NULL,
+  "ProductId" INTEGER NOT NULL,
+  "UnitPrice" DECIMAL NOT NULL,
+  "Quantity" INTEGER NOT NULL,
+  "Discount" DOUBLE NOT NULL , Amount Decimal,
+  FOREIGN KEY (OrderId) REFERENCES "Order"("Id"),
+  FOREIGN KEY (ProductId) REFERENCES Product("Id")
+);
 INSERT INTO OrderDetailX SELECT * FROM OrderDetail;
+
+INSERT INTO OrderDetailX SELECT null, OrderId, ProductId, UnitPrice,
+ Quantity, Discount, Amount FROM OrderDetail;
