@@ -48,7 +48,8 @@ update Customer set creditlimit = balance + 100;
     11045 for BOTTM (22607.7 ==> 1309.5)
     ALFKI has balance=0
 
-select id, balance, creditlimit from customer where id="BOTTM";
+
+select id, amounttotal from "Order" where id=11011;
 
 ALFKI 6 Orders
 

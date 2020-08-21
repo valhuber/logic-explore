@@ -1,4 +1,10 @@
 # coding: utf-8
+
+'''
+WARNING: used in nw_logic, but FAB uses version in nw-app/app
+The primary copy is here -- copy changes to nw-app/app.
+'''
+
 from sqlalchemy import Boolean, Column, DECIMAL, DateTime, Float, ForeignKey, Integer, LargeBinary, String, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
