@@ -2,6 +2,10 @@ from sqlalchemy.orm import session
 
 def my_before_commit(a_session: session):
     print("logic: before commit!")
+    # for obj in versioned_objects(a_session.dirty):
+    for obj in a_session.dirty:
+        print("logic: before commit! --> " + str(obj))
+    print("logic: before commit!  EXIT")
 
 
 
