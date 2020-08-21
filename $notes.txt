@@ -34,7 +34,10 @@ update orderdetail set amount = unitPrice * quantity
 update "Order" set AmountTotal =
 (select sum(orderdetail.amount) from orderdetail where orderdetail.orderid = "Order".id);
 
-select id, amounttotal from "Order" where id = 11077;
+select id, shippeddate, amounttotal from "Order" where id = 11077;
+
+select id, balance, creditlimit from customer where id="ALFKI"
+    960
 
 update Customer set Balance =
 (select sum("Order".amounttotal) from "Order" where Customer.id = "Order".customerid
@@ -53,54 +56,3 @@ select id, amounttotal from "Order" where id=11011;
 
 ALFKI 6 Orders
 
-CREATE TABLE IF NOT EXISTS "OrderX"
-(
-  "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "CustomerId" VARCHAR(8000) NULL,
-  "EmployeeId" INTEGER NOT NULL,
-  "OrderDate" VARCHAR(8000) NULL,
-  "RequiredDate" VARCHAR(8000) NULL,
-  "ShippedDate" VARCHAR(8000) NULL,
-  "ShipVia" INTEGER NULL,
-  "Freight" DECIMAL NOT NULL,
-  "ShipName" VARCHAR(8000) NULL,
-  "ShipAddress" VARCHAR(8000) NULL,
-  "ShipCity" VARCHAR(8000) NULL,
-  "ShipRegion" VARCHAR(8000) NULL,
-  "ShipPostalCode" VARCHAR(8000) NULL,
-  "ShipCountry" VARCHAR(8000) NULL, AmountTotal Decimal,
-  FOREIGN KEY (CustomerId) REFERENCES Customer(Id)
-);
-
-INSERT INTO OrderX SELECT * FROM "Order";
-
-ALTER TABLE "Order" RENAME TO OrderTemp;
-ALTER TABLE "OrderX" RENAME TO "Order";
-
-CREATE TABLE IF NOT EXISTS "OrderDetailX"
-(
-  "Id" INTEGER PRIMARY KEY,
-  "OrderId" INTEGER NOT NULL,
-  "ProductId" INTEGER NOT NULL,
-  "UnitPrice" DECIMAL NOT NULL,
-  "Quantity" INTEGER NOT NULL,
-  "Discount" DOUBLE NOT NULL , Amount Decimal,
-  FOREIGN KEY (OrderId) REFERENCES "Order"("Id"),
-  FOREIGN KEY (ProductId) REFERENCES Product("Id")
-);
-
-CREATE TABLE IF NOT EXISTS "OrderDetailX"
-(
-  "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "OrderId" INTEGER NOT NULL,
-  "ProductId" INTEGER NOT NULL,
-  "UnitPrice" DECIMAL NOT NULL,
-  "Quantity" INTEGER NOT NULL,
-  "Discount" DOUBLE NOT NULL , Amount Decimal,
-  FOREIGN KEY (OrderId) REFERENCES "Order"("Id"),
-  FOREIGN KEY (ProductId) REFERENCES Product("Id")
-);
-INSERT INTO OrderDetailX SELECT * FROM OrderDetail;
-
-INSERT INTO OrderDetailX SELECT null, OrderId, ProductId, UnitPrice,
- Quantity, Discount, Amount FROM OrderDetail;

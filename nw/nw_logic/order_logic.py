@@ -1,5 +1,6 @@
 from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
 import nw.nw_logic.models as models
+from sqlalchemy.orm import session
 
 
 '''
@@ -11,9 +12,16 @@ import nw.nw_logic.models as models
 class OrderLogic:
     row: models.Order
     an_old_row: models.Order
+    a_session: session
 
-    def __init__(self, a_row, an_old_row):
+    _row = None
+    _old_row = None
+
+    def __init__(self, a_row, an_old_row, a_session: session):
         print("creating order logic object")
+        self._row = a_row
+        self._old_row = an_old_row
+        self._session = a_session
 
 
     an_order = models.Order()  # type Order
@@ -28,3 +36,11 @@ class OrderLogic:
     def insert_code(self):
         print("order_logic.insert")
 
+    def update_code(self):
+        print("Order Update Code")
+        if ((self._row.ShippedDate is not None or
+            self._row.ShippedDate > "")
+                and self._row.ShippedDate is None):
+            customer = self._row.Customer
+            customer.Balance += self._row.AmountTotal
+            # do it need attaching?
