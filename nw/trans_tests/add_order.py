@@ -10,10 +10,7 @@ from sqlalchemy.orm import session
 from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
 from typing import NewType
 import nw.nw_logic.models as models
-
-
-def my_before_commit(a_session):
-    print("before commit!")
+from nw.nw_logic import session  # opens db, activates logic listener <--
 
 
 def add_order(a_session: session):
@@ -39,22 +36,9 @@ def add_order(a_session: session):
 
 
 def upd_order(a_session: session):
-    john = a_session.query(models.Order).filter(models.Order.id == -1).one()
+    test_order = a_session.query(models.Order).filter(models.Order.id == 11078).one()
     print("\nupd_order, completed\n\n")
 
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-basedir = os.path.dirname(basedir)
-basedir = os.path.dirname(basedir)
-conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
-engine = sqlalchemy.create_engine(conn_string)
-
-# Create a session
-session_maker = sqlalchemy.orm.sessionmaker()
-session_maker.configure(bind=engine)
-session = session_maker()
-
-event.listen(session, "before_commit", my_before_commit)
 
 add_order(session)
 
