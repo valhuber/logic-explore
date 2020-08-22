@@ -3,7 +3,7 @@ import os
 import sqlalchemy
 from sqlalchemy import event
 
-from nw.trans_tests.logic import my_before_commit
+from nw.nw_logic.logic import my_before_commit
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 basedir = os.path.dirname(basedir)

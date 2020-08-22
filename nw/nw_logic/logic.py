@@ -1,6 +1,6 @@
 from sqlalchemy.orm import session
 
-from nw.nw_logic.order_logic import OrderLogic
+from nw.nw_logic.order_code import OrderCode
 
 
 def my_before_commit(a_session: session):
@@ -10,7 +10,7 @@ def my_before_commit(a_session: session):
         print("logic: before commit! --> " + str(obj))
         obj_class = obj.__tablename__
         if obj_class == "Order":
-            order_logic = OrderLogic(obj, a_session)
+            order_logic = OrderCode(obj, a_session)
             order_logic.update_code()
         elif obj_class == "OrderDetail":
             print("Stub")

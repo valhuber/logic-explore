@@ -9,7 +9,7 @@ from sqlalchemy.orm import session
 '''
 
 
-class OrderLogic:
+class OrderCode:
     row: models.Order
     a_session: session
 
@@ -26,8 +26,14 @@ class OrderLogic:
     an_old_order = models.Order()
     # each rule is a function?
 
-    # @sum_rule Order.AmountTotal = sum(OrderDetails.amount)
-    def derive_amount_total(self, row: models.Order, old_row: models.Order,
-                      child_row: models.OrderDetail) -> int:
-        return logic.Sum(row.OrderDetail, "Amount")
+    def insert_code(self):
+        print("order_logic.insert")
+
+    def update_code(self):
+        print("Order Update Code")
+        if ((self._row.ShippedDate is not None or
+            self._row.ShippedDate > "")
+                and self._row.ShippedDate is None):
+            customer = self._row.Customer
+            customer.Balance += self._row.AmountTotal
             # do it need attaching?
