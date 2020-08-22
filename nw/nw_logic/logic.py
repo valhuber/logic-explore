@@ -1,17 +1,18 @@
 from sqlalchemy.orm import session
+from sqlalchemy.testing import db
 
 from nw.nw_logic.order_code import OrderCode
 
 
-def my_before_commit(a_session: session):
+def nw_before_commit(a_session: session):
     print("logic: before commit!")
     # for obj in versioned_objects(a_session.dirty):
     for obj in a_session.dirty:
         print("logic: before commit! --> " + str(obj))
         obj_class = obj.__tablename__
         if obj_class == "Order":
-            order_logic = OrderCode(obj, a_session)
-            order_logic.update_code()
+            order_code = OrderCode(obj, a_session)
+            order_code.order_commit()
         elif obj_class == "OrderDetail":
             print("Stub")
 

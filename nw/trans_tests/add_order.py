@@ -25,8 +25,8 @@ def add_order(a_session: session):
 
 def upd_order(a_session: session):
     test_order = a_session.query(models.Order).filter(models.Order.Id == 11011).one()
-    # test_order.ShippedDate = "2014-03-24"  # nope, nice try
-    setattr(test_order, 'ShippedDate', "2014-03-24")
+    # test_order.ShippedDate = "2014-03-25"  # nope, nice try
+    setattr(test_order, 'ShippedDate', "2014-03-25")
     # ship this unshipped order (dates are like 2014-03-24)
     # a_session.query(models.Order).update(test_order)  # Order not iterable
     insp = inspect(test_order)
