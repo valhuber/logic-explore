@@ -1,3 +1,5 @@
+from sqlalchemy import inspect
+
 import nw.nw_logic.models as models
 from nw.nw_logic import session  # opens db, activates logic listener <--
 
@@ -23,10 +25,11 @@ def add_order(a_session: session):
 
 def upd_order(a_session: session):
     test_order = a_session.query(models.Order).filter(models.Order.Id == 11011).one()
-    # nice try test_order.ShippedDate = "2014-03-24"
+    # test_order.ShippedDate = "2014-03-24"  # nope, nice try
     setattr(test_order, 'ShippedDate', "2014-03-24")
     # ship this unshipped order (dates are like 2014-03-24)
     # a_session.query(models.Order).update(test_order)  # Order not iterable
+    insp = inspect(test_order)
     a_session.commit()
     print("\nupd_order, completed\n\n")
 

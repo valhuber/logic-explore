@@ -1,11 +1,21 @@
 from sqlalchemy.orm import session
 
+from nw.nw_logic.order_logic import OrderLogic
+
+
 def my_before_commit(a_session: session):
     print("logic: before commit!")
     # for obj in versioned_objects(a_session.dirty):
     for obj in a_session.dirty:
         print("logic: before commit! --> " + str(obj))
-    print("logic: before commit!  EXIT")
+        obj_class = obj.__tablename__
+        if obj_class == "Order":
+            order_logic = OrderLogic(obj, a_session)
+            order_logic.update_code()
+        elif obj_class == "OrderDetail":
+            print("Stub")
+
+    print("logic called: before commit!  EXIT")
 
 
 

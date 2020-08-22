@@ -11,18 +11,16 @@ from sqlalchemy.orm import session
 
 class OrderLogic:
     row: models.Order
-    an_old_row: models.Order
     a_session: session
 
     _row = None
     _old_row = None
 
-    def __init__(self, a_row, an_old_row, a_session: session):
+    def __init__(self, a_row, a_session: session):
         print("creating order logic object")
         self._row = a_row
-        self._old_row = an_old_row
+        self._old_row = None  # FIXME - how is this handled??
         self._session = a_session
-
 
     an_order = models.Order()  # type Order
     an_old_order = models.Order()
