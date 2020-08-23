@@ -2,21 +2,33 @@ from sqlalchemy.exc import UnmappedColumnError
 from sqlalchemy.orm import attributes, object_mapper
 
 
-def get_old_row(obj):
+class ObjectView(object):
     """
-    obtain old_row (during before_flush)
+    Makes a dict look like a row, enabling old_row.attr
+    """
+
+    def __init__(self, d):
+        self.__dict__ = d
+
+    def __str__(self):
+        return str(self.__dict__)
+
+
+def get_old_row(obj) -> ObjectView:
+    """
+    obtain old_row (during before_flush) from sqlalchemy row
 
     thanks
-        # https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
-
+        https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
+        https://goodcode.io/articles/python-dict-object/
     """
     obj_state = attributes.instance_state(obj)
     old_row = {}
     obj_mapper = object_mapper(obj)
     for each_map in obj_mapper.iterate_to_root():
-        print("each_map: " + str(each_map))  # inheritance tree
+        # print("each_map: " + str(each_map))  # inheritance tree
         for each_hist_col in obj_mapper.local_table.c:
-            print("each_hist_col: " + str(each_hist_col))
+            # print("each_hist_col: " + str(each_hist_col))
             try:  # prop.key is colName
                 prop = obj_mapper.get_property_by_column(each_hist_col)
             except UnmappedColumnError:
@@ -45,7 +57,7 @@ def get_old_row(obj):
                 # if the attribute had no value.
                 old_row[prop.key] = a[0]
                 obj_changed = True
-    return old_row
+    return ObjectView(old_row)
 
 
 def row2dict(row: object) -> str:
@@ -58,13 +70,16 @@ def row2dict(row: object) -> str:
 
 def row_to_string(obj) -> str:
     """
-    obj can be dict, or sqlalchemy row
+    obj can be ObjectVew, or sqlalchemy row
     """
-    if type(obj) is dict:
+    # return str(obj)
+
+    if type(obj) is ObjectView:
         return str(obj)
     else:
         my_dict = row2dict(obj)
         return str(my_dict)
+
 
 
 def row_prt(obj: object, a_msg: str = ""):

@@ -36,50 +36,15 @@ class OrderCode:
     # https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
     def order_flush(self):
         print("Order Flush")
+        row = self._row
         old_row = get_old_row(self._row)
-        row_prt(self._row, "row")
+        row_prt(row, "row")
         row_prt(old_row, "old_row")
-        obj = self._row
-        obj_state = attributes.instance_state(obj)
-        old_row = {}
-        obj_mapper = object_mapper(obj)
-        for each_map in obj_mapper.iterate_to_root():
-            print("each_map: " + str(each_map))  # inheritance tree
-            for each_hist_col in obj_mapper.local_table.c:
-                print("each_hist_col: " + str(each_hist_col))
-                try:  # prop.key is colName
-                    prop = obj_mapper.get_property_by_column(each_hist_col)
-                except UnmappedColumnError:
-                    # in the case of single table inheritance, there may be
-                    # columns on the mapped table intended for the subclass only.
-                    # the "unmapped" status of the subclass column on the
-                    # base class is a feature of the declarative module.
-                    continue
-
-                    # expired object attributes and also deferred cols might not
-                    # be in the dict.  force it to load no matter what by
-                    # using getattr().
-                if prop.key == "ShippedDate":
-                    print("DEBUG - changed column")  # stop here!
-                if prop.key not in obj_state.dict:
-                    getattr(obj, prop.key)
-                a, u, d = attributes.get_history(obj, prop.key)
-                # todo prefers .AttributeState.history -- how to code??
-
-                if d:  # changed, and this is the old value
-                    old_row[prop.key] = d[0]
-                    obj_changed = True
-                elif u:  # unchanged
-                    old_row[prop.key] = u[0]
-                elif a:  # added (old value null)
-                    # if the attribute had no value.
-                    old_row[prop.key] = a[0]
-                    obj_changed = True
-        if self._row.ShippedDate != old_row.ShippedDate:
-            customer = self._row.Customer
-            delta = self._row.AmountTotal - old_row.AmountTotal
+        if row.ShippedDate != old_row.ShippedDate:
+            customer = row.Customer
+            delta = row.AmountTotal - old_row.AmountTotal
             customer.Balance += delta
-            # do it need attaching?
+            # does it need attaching?
 
     # happens before flush
     def order_commit(self):
