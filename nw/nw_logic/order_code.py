@@ -5,6 +5,8 @@ from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
 import nw.nw_logic.models as models
 from sqlalchemy.orm import session, attributes, object_mapper
 
+from logic_engine.utli import get_old_row, row_to_string, row_prt
+
 '''
     cannot inherit from models.Order...
     Can't place __table_args__ on an inherited class with no table.
@@ -34,7 +36,9 @@ class OrderCode:
     # https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
     def order_flush(self):
         print("Order Flush")
-        print("cool")
+        old_row = get_old_row(self._row)
+        row_prt(self._row, "row")
+        row_prt(old_row, "old_row")
         obj = self._row
         obj_state = attributes.instance_state(obj)
         old_row = {}
