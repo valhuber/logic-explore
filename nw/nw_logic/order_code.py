@@ -35,25 +35,24 @@ class OrderCode:
 
     # https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
     def order_flush(self):
-        print("Order Flush")
         row = self._row
         old_row = get_old_row(self._row)
         row_prt(row, "order_flush")
         if row.ShippedDate != old_row.ShippedDate:
+            is_unshipped = (row.ShippedDate is None) or (row.ShippedDate == "")
+            delta = row.AmountTotal  # assume not changed!!
+            if is_unshipped:
+                delta = - row.AmountTotal
             customer = row.Customer
-            delta = row.AmountTotal - old_row.AmountTotal
-            customer.Balance += delta
-            # does it need attaching?
+            customer.Balance += delta  # attach, update not req'd
+            row_prt(customer, "order_flush adjusted")
 
     # happens before flush
     def order_commit(self):
-        print("Order Update Code")
-        if ((self._row.ShippedDate is not None or
-            self._row.ShippedDate > "")
-                and self._row.ShippedDate is None):
-            customer = self._row.Customer
-            customer.Balance += self._row.AmountTotal
-            # do it need attaching?
+        row = self._row
+        old_row = get_old_row(self._row)
+        row_prt(row, "order_commit")
+
 
 def order_modified(object):
     print("Order modified")

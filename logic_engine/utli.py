@@ -41,7 +41,7 @@ def get_old_row(obj) -> ObjectView:
                 # expired object attributes and also deferred cols might not
                 # be in the dict.  force it to load no matter what by
                 # using getattr().
-            if prop.key == "ShippedDate":
+            if prop.key == "ShippedDatexx":
                 print("DEBUG - changed column")  # stop here!
             if prop.key not in obj_state.dict:
                 getattr(obj, prop.key)
@@ -93,7 +93,7 @@ def row_to_string(obj) -> str:
             value = my_dict[each_attr_name]
             result += value
             old_value = getattr(old_row, each_attr_name)
-            if each_attr_name == "ShippedDate":
+            if each_attr_name == "ShippedDatexx":
                 print("Debug Stop here")
             if value != str(old_value):
                 result += '<--[' + old_value + ']'
@@ -104,4 +104,4 @@ def row_to_string(obj) -> str:
 
 def row_prt(obj: object, a_msg: str = ""):
     prt = row_to_string(obj)
-    print(a_msg + ": " + prt)
+    print(a_msg + ", " + prt)
