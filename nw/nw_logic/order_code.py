@@ -40,9 +40,9 @@ class OrderCode:
         row_prt(row, "order_flush")
         if row.ShippedDate != old_row.ShippedDate:
             is_unshipped = (row.ShippedDate is None) or (row.ShippedDate == "")
-            delta = row.AmountTotal  # assume not changed!!
+            delta = - row.AmountTotal  # assume not changed!!
             if is_unshipped:
-                delta = - row.AmountTotal
+                delta = row.AmountTotal
             customer = row.Customer
             customer.Balance += delta  # attach, update not req'd
             row_prt(customer, "order_flush adjusted")

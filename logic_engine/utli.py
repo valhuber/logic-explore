@@ -96,7 +96,7 @@ def row_to_string(obj) -> str:
             if each_attr_name == "ShippedDatexx":
                 print("Debug Stop here")
             if value != str(old_value):
-                result += '<--[' + old_value + ']'
+                result += '<--[' + str(old_value) + ']'
         return result  # str(my_dict)
     else:
         raise Exception("Oops, expected ObjectView or sqlalchemy row")
