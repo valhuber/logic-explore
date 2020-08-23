@@ -6,7 +6,7 @@ from sqlalchemy.testing import db
 
 from nw.nw_logic.models import Order
 
-from nw.nw_logic.logic import nw_before_commit
+from nw.nw_logic.logic import nw_before_commit, nw_before_flush
 from nw.nw_logic.order_code import order_modified
 
 '''
@@ -20,7 +20,7 @@ basedir = os.path.dirname(basedir)
 basedir = os.path.dirname(basedir)
 conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
 # e.g. 'sqlite:////Users/val/python/vsc/logic-explore/nw-app/nw.db'
-engine = sqlalchemy.create_engine(conn_string)
+engine = sqlalchemy.create_engine(conn_string, echo=True)
 
 '''
 @event.listens_for(Order, 'before_update')
@@ -49,6 +49,7 @@ session = session_maker()
 
 # target, modifier, function
 event.listen(session, "before_commit", nw_before_commit)
+event.listen(session, "before_flush", nw_before_flush)
 
 # event.listen(Order.ShippedDate, "set", order_modified)
 print("session created, listeners registered")

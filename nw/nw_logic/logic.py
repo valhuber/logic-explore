@@ -15,6 +15,19 @@ def nw_before_commit(a_session: session):
             order_code.order_commit()
         elif obj_class == "OrderDetail":
             print("Stub")
+    print("logic called: before commit!  EXIT")
+
+
+def nw_before_flush(a_session, a_flush_context, an_instances):
+    print("logic: before flush!")
+    for each_instance in a_session.dirty:
+        print("logic: flushing! --> " + str(each_instance))
+        obj_class = each_instance.__tablename__
+        if obj_class == "Order":
+            order_code = OrderCode(each_instance, a_session)
+            order_code.order_flush()
+        elif obj_class == "OrderDetail":
+            print("Stub")
 
     print("logic called: before commit!  EXIT")
 
