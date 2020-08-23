@@ -38,8 +38,7 @@ class OrderCode:
         print("Order Flush")
         row = self._row
         old_row = get_old_row(self._row)
-        row_prt(row, "row")
-        row_prt(old_row, "old_row")
+        row_prt(row, "order_flush")
         if row.ShippedDate != old_row.ShippedDate:
             customer = row.Customer
             delta = row.AmountTotal - old_row.AmountTotal

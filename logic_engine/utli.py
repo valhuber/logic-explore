@@ -61,10 +61,13 @@ def get_old_row(obj) -> ObjectView:
 
 
 def row2dict(row: object) -> str:
+    """
+    convert sqlalchemy row to dict (e.g, for debug print)
+    it's hard to type sqlalchemy
+    """
     d = {}
     for column in row.__table__.columns:
         d[column.name] = str(getattr(row, column.name))
-
     return d
 
 
@@ -76,10 +79,27 @@ def row_to_string(obj) -> str:
 
     if type(obj) is ObjectView:
         return str(obj)
-    else:
+    elif hasattr(obj, "__table__"):  # sqlalchemy row
+        result = result = obj.__tablename__ + ": "
+        old_row = get_old_row(obj)
+        is_first = True
         my_dict = row2dict(obj)
-        return str(my_dict)
-
+        for each_attr_name in sorted(my_dict.keys()):
+            if not is_first:
+                result += ", "
+            is_first = False
+            # print(each_attr_name, end=" ")
+            result += each_attr_name + ": "
+            value = my_dict[each_attr_name]
+            result += value
+            old_value = getattr(old_row, each_attr_name)
+            if each_attr_name == "ShippedDate":
+                print("Debug Stop here")
+            if value != str(old_value):
+                result += '<--[' + old_value + ']'
+        return result  # str(my_dict)
+    else:
+        raise Exception("Oops, expected ObjectView or sqlalchemy row")
 
 
 def row_prt(obj: object, a_msg: str = ""):
