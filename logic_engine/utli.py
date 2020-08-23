@@ -89,14 +89,14 @@ def row_to_string(obj) -> str:
                 result += ", "
             is_first = False
             # print(each_attr_name, end=" ")
-            result += each_attr_name + ": "
+            result += each_attr_name
             value = my_dict[each_attr_name]
-            result += value
             old_value = getattr(old_row, each_attr_name)
             if each_attr_name == "ShippedDatexx":
                 print("Debug Stop here")
             if value != str(old_value):
-                result += '<--[' + str(old_value) + ']'
+                result += ' [' + str(old_value) + '-->]'
+            result += ': ' + value
         return result  # str(my_dict)
     else:
         raise Exception("Oops, expected ObjectView or sqlalchemy row")

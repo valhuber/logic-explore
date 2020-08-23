@@ -28,43 +28,43 @@ ALFKI 6 Orders
 
 upd_order log:
 
-/Users/val/python/vscode/logic-explore/venv/bin/python "/Applications/PyCharm CE.app/Contents/plugins/python-ce/helpers/pydev/pydevd.py" --multiproc --qt-support=auto --client 127.0.0.1 --port 62081 --file /Users/val/python/vscode/logic-explore/nw/trans_tests/add_order.py
-pydev debugger: process 78334 is connecting
+/Users/val/python/vscode/logic-explore/venv/bin/python "/Applications/PyCharm CE.app/Contents/plugins/python-ce/helpers/pydev/pydevd.py" --multiproc --qt-support=auto --client 127.0.0.1 --port 62139 --file /Users/val/python/vscode/logic-explore/nw/trans_tests/add_order.py
+pydev debugger: process 79064 is connecting
 
 Connected to pydev debugger (build 202.6397.98)
 session created, listeners registered
-2020-08-23 13:34:16,368 INFO sqlalchemy.engine.base.Engine SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
-2020-08-23 13:34:16,368 INFO sqlalchemy.engine.base.Engine ()
-2020-08-23 13:34:16,369 INFO sqlalchemy.engine.base.Engine SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
-2020-08-23 13:34:16,369 INFO sqlalchemy.engine.base.Engine ()
-2020-08-23 13:34:16,370 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)
-2020-08-23 13:34:16,373 INFO sqlalchemy.engine.base.Engine SELECT "Order"."Id" AS "Order_Id", "Order"."CustomerId" AS "Order_CustomerId", "Order"."EmployeeId" AS "Order_EmployeeId", "Order"."OrderDate" AS "Order_OrderDate", "Order"."RequiredDate" AS "Order_RequiredDate", "Order"."ShippedDate" AS "Order_ShippedDate", "Order"."ShipVia" AS "Order_ShipVia", "Order"."Freight" AS "Order_Freight", "Order"."ShipName" AS "Order_ShipName", "Order"."ShipAddress" AS "Order_ShipAddress", "Order"."ShipCity" AS "Order_ShipCity", "Order"."ShipRegion" AS "Order_ShipRegion", "Order"."ShipPostalCode" AS "Order_ShipPostalCode", "Order"."ShipCountry" AS "Order_ShipCountry", "Order"."AmountTotal" AS "Order_AmountTotal"
+2020-08-23 13:42:54,124 INFO sqlalchemy.engine.base.Engine SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+2020-08-23 13:42:54,124 INFO sqlalchemy.engine.base.Engine ()
+2020-08-23 13:42:54,125 INFO sqlalchemy.engine.base.Engine SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+2020-08-23 13:42:54,125 INFO sqlalchemy.engine.base.Engine ()
+2020-08-23 13:42:54,126 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)
+2020-08-23 13:42:54,129 INFO sqlalchemy.engine.base.Engine SELECT "Order"."Id" AS "Order_Id", "Order"."CustomerId" AS "Order_CustomerId", "Order"."EmployeeId" AS "Order_EmployeeId", "Order"."OrderDate" AS "Order_OrderDate", "Order"."RequiredDate" AS "Order_RequiredDate", "Order"."ShippedDate" AS "Order_ShippedDate", "Order"."ShipVia" AS "Order_ShipVia", "Order"."Freight" AS "Order_Freight", "Order"."ShipName" AS "Order_ShipName", "Order"."ShipAddress" AS "Order_ShipAddress", "Order"."ShipCity" AS "Order_ShipCity", "Order"."ShipRegion" AS "Order_ShipRegion", "Order"."ShipPostalCode" AS "Order_ShipPostalCode", "Order"."ShipCountry" AS "Order_ShipCountry", "Order"."AmountTotal" AS "Order_AmountTotal"
 FROM "Order"
 WHERE "Order"."Id" = ?
-2020-08-23 13:34:16,373 INFO sqlalchemy.engine.base.Engine (11011,)
+2020-08-23 13:42:54,129 INFO sqlalchemy.engine.base.Engine (11011,)
 returning ['xxx' -> ]
 logic: before commit!
-logic: before commit! --> <nw.nw_logic.models.Order object at 0x10b9ce280>
+logic: before commit! --> <nw.nw_logic.models.Order object at 0x10385a280>
 CTOR order_code.OrderCode
-order_commit, Order: AmountTotal: 960.0000000000, CustomerId: ALFKI, EmployeeId: 3, Freight: 1.2100000000, Id: 11011, OrderDate: 2014-04-09, RequiredDate: 2014-05-07, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipCountry: Germany, ShipName: Alfred's Futterkiste, ShipPostalCode: 12209, ShipRegion: Western Europe, ShipVia: 1, ShippedDate: <--[2020-08-23 13:27:33.225318]
+order_commit, Order: AmountTotal: 960.0000000000, CustomerId: ALFKI, EmployeeId: 3, Freight: 1.2100000000, Id: 11011, OrderDate: 2014-04-09, RequiredDate: 2014-05-07, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipCountry: Germany, ShipName: Alfred's Futterkiste, ShipPostalCode: 12209, ShipRegion: Western Europe, ShipVia: 1, ShippedDate[2020-08-23 13:35:30.641024-->]:
 logic called: before commit!  EXIT
 nw_before_flush
-nw_before_flush flushing! --> <nw.nw_logic.models.Order object at 0x10b9ce280>
+nw_before_flush flushing! --> <nw.nw_logic.models.Order object at 0x10385a280>
 CTOR order_code.OrderCode
-order_flush, Order: AmountTotal: 960.0000000000, CustomerId: ALFKI, EmployeeId: 3, Freight: 1.2100000000, Id: 11011, OrderDate: 2014-04-09, RequiredDate: 2014-05-07, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipCountry: Germany, ShipName: Alfred's Futterkiste, ShipPostalCode: 12209, ShipRegion: Western Europe, ShipVia: 1, ShippedDate: <--[2020-08-23 13:27:33.225318]
-2020-08-23 13:34:16,382 INFO sqlalchemy.engine.base.Engine SELECT "Customer"."Id" AS "Customer_Id", "Customer"."CompanyName" AS "Customer_CompanyName", "Customer"."ContactName" AS "Customer_ContactName", "Customer"."ContactTitle" AS "Customer_ContactTitle", "Customer"."Address" AS "Customer_Address", "Customer"."City" AS "Customer_City", "Customer"."Region" AS "Customer_Region", "Customer"."PostalCode" AS "Customer_PostalCode", "Customer"."Country" AS "Customer_Country", "Customer"."Phone" AS "Customer_Phone", "Customer"."Fax" AS "Customer_Fax", "Customer"."Balance" AS "Customer_Balance", "Customer"."CreditLimit" AS "Customer_CreditLimit"
+order_flush, Order: AmountTotal: 960.0000000000, CustomerId: ALFKI, EmployeeId: 3, Freight: 1.2100000000, Id: 11011, OrderDate: 2014-04-09, RequiredDate: 2014-05-07, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipCountry: Germany, ShipName: Alfred's Futterkiste, ShipPostalCode: 12209, ShipRegion: Western Europe, ShipVia: 1, ShippedDate[2020-08-23 13:35:30.641024-->]:
+2020-08-23 13:42:54,138 INFO sqlalchemy.engine.base.Engine SELECT "Customer"."Id" AS "Customer_Id", "Customer"."CompanyName" AS "Customer_CompanyName", "Customer"."ContactName" AS "Customer_ContactName", "Customer"."ContactTitle" AS "Customer_ContactTitle", "Customer"."Address" AS "Customer_Address", "Customer"."City" AS "Customer_City", "Customer"."Region" AS "Customer_Region", "Customer"."PostalCode" AS "Customer_PostalCode", "Customer"."Country" AS "Customer_Country", "Customer"."Phone" AS "Customer_Phone", "Customer"."Fax" AS "Customer_Fax", "Customer"."Balance" AS "Customer_Balance", "Customer"."CreditLimit" AS "Customer_CreditLimit"
 FROM "Customer"
 WHERE "Customer"."Id" = ?
-2020-08-23 13:34:16,382 INFO sqlalchemy.engine.base.Engine ('ALFKI',)
+2020-08-23 13:42:54,138 INFO sqlalchemy.engine.base.Engine ('ALFKI',)
 /Users/val/python/vscode/logic-explore/venv/lib/python3.8/site-packages/sqlalchemy/sql/sqltypes.py:661: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
   util.warn(
-order_flush adjusted, Customer: Address: Obere Str. 57, Balance: 960.0000000000<--[0E-10], City: Berlin, CompanyName: Alfreds Futterkiste, ContactName: Maria Anders, ContactTitle: Sales Representative, Country: Germany, CreditLimit: 1060.0000000000, Fax: 030-0076545, Id: ALFKI, Phone: 030-0074321, PostalCode: 12209, Region: Western Europe
+order_flush adjusted, Customer: Address: Obere Str. 57, Balance[0E-10-->]: 960.0000000000, City: Berlin, CompanyName: Alfreds Futterkiste, ContactName: Maria Anders, ContactTitle: Sales Representative, Country: Germany, CreditLimit: 1060.0000000000, Fax: 030-0076545, Id: ALFKI, Phone: 030-0074321, PostalCode: 12209, Region: Western Europe
 nw_before_flush  EXIT
-2020-08-23 13:34:19,138 INFO sqlalchemy.engine.base.Engine UPDATE "Customer" SET "Balance"=? WHERE "Customer"."Id" = ?
-2020-08-23 13:34:19,139 INFO sqlalchemy.engine.base.Engine (960.0, 'ALFKI')
-2020-08-23 13:34:19,145 INFO sqlalchemy.engine.base.Engine UPDATE "Order" SET "ShippedDate"=? WHERE "Order"."Id" = ?
-2020-08-23 13:34:19,145 INFO sqlalchemy.engine.base.Engine ('', 11011)
-2020-08-23 13:34:19,149 INFO sqlalchemy.engine.base.Engine COMMIT
+2020-08-23 13:42:58,362 INFO sqlalchemy.engine.base.Engine UPDATE "Customer" SET "Balance"=? WHERE "Customer"."Id" = ?
+2020-08-23 13:42:58,363 INFO sqlalchemy.engine.base.Engine (960.0, 'ALFKI')
+2020-08-23 13:42:58,372 INFO sqlalchemy.engine.base.Engine UPDATE "Order" SET "ShippedDate"=? WHERE "Order"."Id" = ?
+2020-08-23 13:42:58,373 INFO sqlalchemy.engine.base.Engine ('', 11011)
+2020-08-23 13:42:58,379 INFO sqlalchemy.engine.base.Engine COMMIT
 
 upd_order, completed
 
