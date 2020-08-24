@@ -1,11 +1,15 @@
 import nw.nw_logic.models as models
 from sqlalchemy.orm import session, attributes, object_mapper
-
 from logic_engine.utli import get_old_row, row_to_string, row_prt
 
 
 def order_detail_flush_new(a_row, a_session: session):
-    old_row = get_old_row(a_row)
+    """
+    OrderDetail before_flush, new rows
+    compute amount, adjust Order.AmountTotal
+    .. which adjusts Customer.balance)
+    """
+    # no "old" in inserts...  old_row = get_old_row(a_row)
     row_prt(a_row, "\norder_detail_flush_new")
     # nice try.. product = row.Product
     product = a_session.query(models.Product).\
