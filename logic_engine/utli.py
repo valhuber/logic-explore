@@ -1,6 +1,8 @@
 from sqlalchemy.exc import UnmappedColumnError
 from sqlalchemy.orm import attributes, object_mapper
 
+from nw.nw_logic.models import Base
+
 
 class ObjectView(object):
     """
@@ -60,7 +62,7 @@ def get_old_row(obj) -> ObjectView:
     return ObjectView(old_row)
 
 
-def row2dict(row: object) -> str:
+def row2dict(row: Base) -> dict:
     """
     convert sqlalchemy row to dict (e.g, for debug print)
     it's hard to type sqlalchemy
@@ -80,7 +82,7 @@ def row_to_string(obj) -> str:
     if type(obj) is ObjectView:
         return str(obj)
     elif hasattr(obj, "__table__"):  # sqlalchemy row
-        result = result = obj.__tablename__ + ": "
+        result = obj.__tablename__ + ": "
         old_row = get_old_row(obj)
         is_first = True
         my_dict = row2dict(obj)

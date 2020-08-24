@@ -1,69 +1,48 @@
 from sqlalchemy import event
-from sqlalchemy.exc import UnmappedColumnError
 
-from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
 import nw.nw_logic.models as models
-from sqlalchemy.orm import session, attributes, object_mapper
+from sqlalchemy.orm import session
 
-from logic_engine.utli import get_old_row, row_to_string, row_prt
-
-'''
-    cannot inherit from models.Order...
-    Can't place __table_args__ on an inherited class with no table.
-'''
+from logic_engine.utli import get_old_row, row_prt
 
 
-class OrderCode:
-    row: models.Order
-    a_session: session
+# https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
+def order_flush_dirty(a_row, a_session: session):
+    """
+    Called from logic.py on before_flush
+    E.g., altering an Order ShippedDate (we must adjust Customer balance)
+    """
+    old_row = get_old_row(a_row)
+    row_prt(a_row, "\norder_flush_dirty")
 
-    _row = None
-    _old_row = None
+    if a_row.ShippedDate != old_row.ShippedDate:
+        is_unshipped = (a_row.ShippedDate is None) or (a_row.ShippedDate == "")
+        delta = - a_row.AmountTotal  # assume not changed!!
+        if is_unshipped:
+            delta = a_row.AmountTotal
+        customer = a_row.Customer
+        customer.Balance += delta  # attach, update not req'd
+        row_prt(customer, "order_flush_dirty adjusted per shipped change")
 
-    def __init__(self, a_row, a_session: session):
-        print("CTOR order_code.OrderCode")
-        self._row = a_row
-        self._old_row = None
-        self._session = a_session
-
-    # https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
-    def order_flush_dirty(self):
-        """
-        Called from logic.py on before_flush
-        E.g., altering an Order ShippedDate (we must adjust Customer balance)
-        """
-        row = self._row
-        old_row = get_old_row(self._row)
-        row_prt(row, "\norder_flush_dirty")
-
-        if row.ShippedDate != old_row.ShippedDate:
-            is_unshipped = (row.ShippedDate is None) or (row.ShippedDate == "")
-            delta = - row.AmountTotal  # assume not changed!!
-            if is_unshipped:
-                delta = row.AmountTotal
-            customer = row.Customer
-            customer.Balance += delta  # attach, update not req'd
-            row_prt(customer, "order_flush_dirty adjusted per shipped change")
-
-        if row.AmountTotal != old_row.AmountTotal:
-            customer = row.Customer
-            delta = row.AmountTotal - old_row.AmountTotal
-            customer.Balance += delta  # attach, update not req'd
-            row_prt(customer, "order_flush_dirty adjusted per AmountTotal change")
+    if a_row.AmountTotal != old_row.AmountTotal:
+        customer = a_row.Customer
+        delta = a_row.AmountTotal - old_row.AmountTotal
+        customer.Balance += delta  # attach, update not req'd
+        row_prt(customer, "order_flush_dirty adjusted per AmountTotal change")
 
 
-    def order_flush_new(self):
-        """
-        Called from logic.py on before_flush
-        """
-        row = self._row
-        row_prt(row, "order_flush_new - no logic required")
+def order_flush_new(a_row, a_session: session):
+    """
+    Called from logic.py on before_flush
+    """
+    row = a_row
+    row_prt(a_row, "order_flush_new - no logic required")
 
-    # happens before flush
-    def order_commit_dirty(self):
-        row = self._row
-        old_row = get_old_row(self._row)
-        row_prt(row, "order_commit_dirty")
+
+# happens before flush
+def order_commit_dirty(a_row, a_session: session):
+    old_row = get_old_row(a_row)
+    row_prt(a_row, "order_commit_dirty")
 
 
 # *********************** unused experiments *************************

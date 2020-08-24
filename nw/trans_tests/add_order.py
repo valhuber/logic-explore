@@ -1,7 +1,3 @@
-from datetime import datetime
-
-from sqlalchemy import inspect
-
 import nw.nw_logic.models as models
 from logic_engine.utli import row_prt
 from nw.nw_logic import session  # opens db, activates logic listener <--
