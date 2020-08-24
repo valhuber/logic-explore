@@ -35,6 +35,7 @@ class OrderCode:
         row = self._row
         old_row = get_old_row(self._row)
         row_prt(row, "\norder_flush_dirty")
+
         if row.ShippedDate != old_row.ShippedDate:
             is_unshipped = (row.ShippedDate is None) or (row.ShippedDate == "")
             delta = - row.AmountTotal  # assume not changed!!
@@ -43,6 +44,7 @@ class OrderCode:
             customer = row.Customer
             customer.Balance += delta  # attach, update not req'd
             row_prt(customer, "order_flush_dirty adjusted per shipped change")
+
         if row.AmountTotal != old_row.AmountTotal:
             customer = row.Customer
             delta = row.AmountTotal - old_row.AmountTotal

@@ -36,7 +36,7 @@ class OrderDetailCode:
         row.UnitPrice = product.UnitPrice
         row.Amount = row.Quantity * row.UnitPrice
         order = row.OrderHeader
-        order.AmountTotal += row.Amount
+        order.AmountTotal += row.Amount  # hmm.. not triggering Order's before_flush
         row_prt(order, "order_detail_flush_new adjusted")
 
     def order_detail_flush_dirty(self):
