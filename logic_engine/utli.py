@@ -90,10 +90,13 @@ def row_to_string(obj) -> str:
             is_first = False
             # print(each_attr_name, end=" ")
             result += each_attr_name
-            value = my_dict[each_attr_name]
-            old_value = getattr(old_row, each_attr_name)
-            if each_attr_name == "ShippedDatexx":
+            if each_attr_name == "Id":
                 print("Debug Stop here")
+            value = my_dict[each_attr_name]
+            if hasattr(old_row, each_attr_name):
+                old_value = getattr(old_row, each_attr_name)
+            else:
+                old_value = "*"
             if value != str(old_value):
                 result += ' [' + str(old_value) + '-->]'
             result += ': ' + value

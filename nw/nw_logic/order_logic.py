@@ -10,24 +10,34 @@ from sqlalchemy.orm import session
 
 
 class OrderLogic:
-    row: models.Order
-    a_session: session
+    """
+    This is to explore *declarative* logic.  Not implemented, just imagining.
+    In this approach, logic is not (mainly) code, it's spreadsheet-like expressions.
+    The engine calls these whenn referenced data changes, pruning other calls.
 
-    _row = None
-    _old_row = None
+    They apply to all changes, i.e. cover Use Cases of
+    Add Order, Ship Order, UnShip Order, Delete Order
+    Change OrderDetail qty/product, ... (~12)
 
-    def __init__(self, a_row, a_session: session):
-        print("creating order logic object")
-        self._row = a_row
-        self._old_row = None  # FIXME - how is this handled??
-        self._session = a_session
+    The sample problem is "check credit" -- executable (someday) design below.
+    """
 
-    an_order = models.Order()  # type Order
-    an_old_order = models.Order()
-    # each rule is a function?
+    # @constraint_rule Customer
+    def check_credit(self):
+        return self.row.Balance <= self.row.CreditLimit
+
+    # @sum_rule Customer.Balance = sum(Order.AmountTotal where ShippedDate is None)
+    def derive_balance(self):
+        pass  # the logic is in the annotation
 
     # @sum_rule Order.AmountTotal = sum(OrderDetails.amount)
-    def derive_amount_total(self, row: models.Order, old_row: models.Order,
-                      child_row: models.OrderDetail) -> int:
-        return logic.Sum(row.OrderDetail, "Amount")
-            # do it need attaching?
+    def derive_amount_total(self):
+        pass
+
+    # @formula_rule OrderDetail
+    def derive_amount(self):
+        return self.row.Quantity * self.row.ProductPrice
+
+    # @copy_rule OrderDetail.ProductPrice
+    def derive_product_price(self):
+        pass
