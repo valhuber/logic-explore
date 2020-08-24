@@ -29,10 +29,10 @@ class OrderDetailCode:
     def order_detail_flush_new(self):
         row = self._row
         old_row = get_old_row(self._row)
-        row_prt(row, "order_detail_flush_new")
+        row_prt(row, "\norder_detail_flush_new")
         # nice try.. product = row.Product
-        product = self._session.query(models.Product).filter(models.Product.Id == row.ProductId).one()
-
+        product = self._session.query(models.Product).\
+            filter(models.Product.Id == row.ProductId).one()
         row.UnitPrice = product.UnitPrice
         row.Amount = row.Quantity * row.UnitPrice
         order = row.OrderHeader
@@ -41,13 +41,13 @@ class OrderDetailCode:
 
     def order_detail_flush_dirty(self):
         # lots ToDo - check qty, fk
-        raise Exception("order_detail_flush_dirty not implemented")
+        raise Exception("\norder_detail_flush_dirty not implemented")
 
     # happens before flush
     def order_detail_commit_dirty(self):
         row = self._row
         old_row = get_old_row(self._row)
-        row_prt(row, "order_detail_commit_dirty")
+        row_prt(row, "\norder_detail_commit_dirty")
 
 
 def order_detail_modified(object):

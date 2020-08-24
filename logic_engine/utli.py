@@ -90,7 +90,7 @@ def row_to_string(obj) -> str:
             is_first = False
             # print(each_attr_name, end=" ")
             result += each_attr_name
-            if each_attr_name == "Id":
+            if each_attr_name == "Idxx":
                 print("Debug Stop here")
             value = my_dict[each_attr_name]
             if hasattr(old_row, each_attr_name):

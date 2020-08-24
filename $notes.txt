@@ -71,3 +71,57 @@ upd_order, completed
 
 
 Process finished with exit code 0
+
+
+add_order log
+
+/Users/val/python/vscode/logic-explore/venv/bin/python "/Applications/PyCharm CE.app/Contents/plugins/python-ce/helpers/pydev/pydevd.py" --multiproc --qt-support=auto --client 127.0.0.1 --port 64169 --file /Users/val/python/vscode/logic-explore/nw/trans_tests/add_order.py
+pydev debugger: process 93167 is connecting
+
+Connected to pydev debugger (build 202.6397.98)
+session created, listeners registered
+logic: before commit!
+logic called: before commit!  EXIT
+nw_before_flush
+nw_before_flush flushing New! --> <nw.nw_logic.models.Order object at 0x103f95ac0>
+CTOR order_code.OrderCode
+order_flush_new - no logic required, Order: AmountTotal: 0, CustomerId: ALFKI, EmployeeId: 6, Freight: 1, Id [*-->]: None, OrderDate [*-->]: None, RequiredDate [*-->]: None, ShipAddress [*-->]: None, ShipCity: Richmond, ShipCountry [*-->]: None, ShipName [*-->]: None, ShipPostalCode [*-->]: None, ShipRegion [*-->]: None, ShipVia [*-->]: None, ShippedDate [*-->]: None
+nw_before_flush flushing New! --> <nw.nw_logic.models.OrderDetail object at 0x103f95c40>
+CTOR order_code.OrderDetailCode
+
+order_detail_flush_new, OrderDetail: Amount: 0, Discount: 0, Id [*-->]: None, OrderId [*-->]: None, ProductId: 1, Quantity: 1, UnitPrice: 18
+2020-08-23 17:23:57,285 INFO sqlalchemy.engine.base.Engine SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+2020-08-23 17:23:57,285 INFO sqlalchemy.engine.base.Engine ()
+2020-08-23 17:23:57,286 INFO sqlalchemy.engine.base.Engine SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+2020-08-23 17:23:57,286 INFO sqlalchemy.engine.base.Engine ()
+2020-08-23 17:23:57,287 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)
+2020-08-23 17:23:57,289 INFO sqlalchemy.engine.base.Engine SELECT "Product"."Id" AS "Product_Id", "Product"."ProductName" AS "Product_ProductName", "Product"."SupplierId" AS "Product_SupplierId", "Product"."CategoryId" AS "Product_CategoryId", "Product"."QuantityPerUnit" AS "Product_QuantityPerUnit", "Product"."UnitPrice" AS "Product_UnitPrice", "Product"."UnitsInStock" AS "Product_UnitsInStock", "Product"."UnitsOnOrder" AS "Product_UnitsOnOrder", "Product"."ReorderLevel" AS "Product_ReorderLevel", "Product"."Discontinued" AS "Product_Discontinued"
+FROM "Product"
+WHERE "Product"."Id" = ?
+2020-08-23 17:23:57,289 INFO sqlalchemy.engine.base.Engine (1,)
+/Users/val/python/vscode/logic-explore/venv/lib/python3.8/site-packages/sqlalchemy/sql/sqltypes.py:661: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  util.warn(
+order_detail_flush_new adjusted, Order: AmountTotal: 18.0000000000, CustomerId: ALFKI, EmployeeId: 6, Freight: 1, Id [*-->]: None, OrderDate [*-->]: None, RequiredDate [*-->]: None, ShipAddress [*-->]: None, ShipCity: Richmond, ShipCountry [*-->]: None, ShipName [*-->]: None, ShipPostalCode [*-->]: None, ShipRegion [*-->]: None, ShipVia [*-->]: None, ShippedDate [*-->]: None
+nw_before_flush flushing New! --> <nw.nw_logic.models.OrderDetail object at 0x1045194c0>
+CTOR order_code.OrderDetailCode
+
+order_detail_flush_new, OrderDetail: Amount: 0, Discount: 0, Id [*-->]: None, OrderId [*-->]: None, ProductId: 2, Quantity: 2, UnitPrice: 18
+2020-08-23 17:24:03,412 INFO sqlalchemy.engine.base.Engine SELECT "Product"."Id" AS "Product_Id", "Product"."ProductName" AS "Product_ProductName", "Product"."SupplierId" AS "Product_SupplierId", "Product"."CategoryId" AS "Product_CategoryId", "Product"."QuantityPerUnit" AS "Product_QuantityPerUnit", "Product"."UnitPrice" AS "Product_UnitPrice", "Product"."UnitsInStock" AS "Product_UnitsInStock", "Product"."UnitsOnOrder" AS "Product_UnitsOnOrder", "Product"."ReorderLevel" AS "Product_ReorderLevel", "Product"."Discontinued" AS "Product_Discontinued"
+FROM "Product"
+WHERE "Product"."Id" = ?
+2020-08-23 17:24:03,413 INFO sqlalchemy.engine.base.Engine (2,)
+order_detail_flush_new adjusted, Order: AmountTotal: 56.0000000000, CustomerId: ALFKI, EmployeeId: 6, Freight: 1, Id [*-->]: None, OrderDate [*-->]: None, RequiredDate [*-->]: None, ShipAddress [*-->]: None, ShipCity: Richmond, ShipCountry [*-->]: None, ShipName [*-->]: None, ShipPostalCode [*-->]: None, ShipRegion [*-->]: None, ShipVia [*-->]: None, ShippedDate [*-->]: None
+nw_before_flush  EXIT
+2020-08-23 17:24:04,345 INFO sqlalchemy.engine.base.Engine INSERT INTO "Order" ("CustomerId", "EmployeeId", "OrderDate", "RequiredDate", "ShippedDate", "ShipVia", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry", "AmountTotal") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2020-08-23 17:24:04,345 INFO sqlalchemy.engine.base.Engine ('ALFKI', 6, None, None, None, None, 1.0, None, None, 'Richmond', None, None, None, 56.0)
+2020-08-23 17:24:04,356 INFO sqlalchemy.engine.base.Engine INSERT INTO "OrderDetail" ("OrderId", "ProductId", "UnitPrice", "Quantity", "Discount", "Amount") VALUES (?, ?, ?, ?, ?, ?)
+2020-08-23 17:24:04,356 INFO sqlalchemy.engine.base.Engine (11081, 1, 18.0, 1, 0.0, 18.0)
+2020-08-23 17:24:04,359 INFO sqlalchemy.engine.base.Engine INSERT INTO "OrderDetail" ("OrderId", "ProductId", "UnitPrice", "Quantity", "Discount", "Amount") VALUES (?, ?, ?, ?, ?, ?)
+2020-08-23 17:24:04,360 INFO sqlalchemy.engine.base.Engine (11081, 2, 19.0, 2, 0.0, 38.0)
+2020-08-23 17:24:04,363 INFO sqlalchemy.engine.base.Engine COMMIT
+
+add_order, completed
+
+
+
+Process finished with exit code 0
