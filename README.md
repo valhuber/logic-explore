@@ -1,6 +1,6 @@
 # logic-explore
 
-Explore sqlalchemy, events, declarative logic with a running example.   Focus:
+Explore sqlalchemy, events, and declarative logic with a running example.   Focus:
 * db-generated keys
 * update logic (specifically multi-level rollups and old value)
 using sqlalchemy events
