@@ -1,6 +1,10 @@
 # logic-explore
 
-Explore sqlalchemy, events, declarative logic.
+Explore sqlalchemy, events, declarative logic with a running example.   Focus:
+* db-generated keys
+* update logic (specifically multi-level rollups and old value)
+using sqlalchemy events
+* web app using Flask AppBuilder's Quickstart.
 
 ## Installation
 Use pycharm, and pip install from `requirements.txt`.
