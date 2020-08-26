@@ -33,10 +33,13 @@ row_prt(new_item2, "\nnew Order Detail 2 Result")  # 2 Chang @ $19 = $38
 
 if post_cust.Balance == pre_cust.Balance + 56:
     row_prt(post_cust, "\nCorrect adjusted Customer Result")
+    assert True
 else:
     row_prt(post_cust, "\nERROR - incorrect adjusted Customer Result")
     print("\n--> probable cause: item's Order adjust before_flush logic does not run Order's flush")
     row_prt(pre_cust, "\npre_cust")
+    assert False
 
 print("\nadd_order, ran to completion\n\n")
+
 

@@ -28,4 +28,4 @@ session.commit()
 
 print("\nhello worldDB, completed\n\n")
 
-anOrder = models.Order()  # type: models.Order
+assert True
