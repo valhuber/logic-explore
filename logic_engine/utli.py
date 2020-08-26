@@ -43,7 +43,7 @@ def get_old_row(obj) -> ObjectView:
                 # expired object attributes and also deferred cols might not
                 # be in the dict.  force it to load no matter what by
                 # using getattr().
-            if prop.key == "ShippedDatexx":
+            if prop.key == "ShippedDate":
                 print("DEBUG - changed column")  # stop here!
             if prop.key not in obj_state.dict:
                 getattr(obj, prop.key)
@@ -62,14 +62,21 @@ def get_old_row(obj) -> ObjectView:
     return ObjectView(old_row)
 
 
+def hydrate_row(a_row: Base) -> Base:
+    get_old_row(a_row)
+    return a_row
+
+
 def row2dict(row: Base) -> dict:
     """
     convert sqlalchemy row to dict (e.g, for debug print)
     it's hard to type sqlalchemy
+    https://stackoverflow.com/questions/1958219/convert-sqlalchemy-row-object-to-python-dict
     """
+    # result = dict(row)  # fails - not iterable
     d = {}
     for column in row.__table__.columns:
-        d[column.name] = str(getattr(row, column.name))
+        d[column.name] = getattr(row, column.name)  # FIXME value vs str(getattr(row, column.name))
     return d
 
 
@@ -101,7 +108,7 @@ def row_to_string(obj) -> str:
                 old_value = "*"
             if value != str(old_value):
                 result += ' [' + str(old_value) + '-->]'
-            result += ': ' + value
+            result += ': ' + str(value)  # FIXME consider optional str
         return result  # str(my_dict)
     else:
         raise Exception("Oops, expected ObjectView or sqlalchemy row")

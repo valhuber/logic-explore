@@ -36,7 +36,7 @@ if post_cust.Balance == pre_cust.Balance + 56:
     assert True
 else:
     row_prt(post_cust, "\nERROR - incorrect adjusted Customer Result")
-    print("\n--> probable cause: item's Order adjust before_flush logic does not run Order's flush")
+    print("\n--> probable cause: Order customer update not written")
     row_prt(pre_cust, "\npre_cust")
     assert False
 

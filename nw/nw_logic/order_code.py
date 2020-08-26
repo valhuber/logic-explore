@@ -13,30 +13,45 @@ def order_flush_dirty(a_row, a_session: session):
     E.g., altering an Order ShippedDate (we must adjust Customer balance)
     """
     old_row = get_old_row(a_row)
+    order_update(a_row, old_row, a_session)
+
+
+def order_update(a_row, an_old_row, a_session):
+    """
+    called either by order_flush_dirty, *or* by order_detail_code. to adjust order
+    see order_detail_code.order_detail_flush_new
+    """
     row_prt(a_row, "\norder_flush_dirty")
 
-    if a_row.ShippedDate != old_row.ShippedDate:
+    if a_row.ShippedDate != an_old_row.ShippedDate:
         is_unshipped = (a_row.ShippedDate is None) or (a_row.ShippedDate == "")
         delta = - a_row.AmountTotal  # assume not changed!!
         if is_unshipped:
             delta = a_row.AmountTotal
         customer = a_row.Customer
         customer.Balance += delta  # attach, update not req'd
-        row_prt(customer, "order_flush_dirty adjusted per shipped change")
+        row_prt(customer, "order_upd adjusted per shipped change")
 
-    if a_row.AmountTotal != old_row.AmountTotal:
-        customer = a_row.Customer
-        delta = a_row.AmountTotal - old_row.AmountTotal
+    if a_row.CustomerId != an_old_row.CustomerId:
+        raise Exception("\norder_upd/ change Cust not implemented")
+
+    if a_row.AmountTotal != an_old_row.AmountTotal:
+        # nice try customer = a_row.Customer
+        customer = a_session.query(models.Customer). \
+            filter(models.Customer.Id == a_row.CustomerId).one()
+
+        delta = a_row.AmountTotal - an_old_row.AmountTotal
         customer.Balance += delta  # attach, update not req'd
-        row_prt(customer, "order_flush_dirty adjusted per AmountTotal change")
+        a_session.add(customer)
+        row_prt(customer, "order_upd adjusted Customer, per AmountTotal change")
 
 
 def order_flush_new(a_row, a_session: session):
     """
     Called from logic.py on before_flush
     """
-    row = a_row
-    row_prt(a_row, "order_flush_new - no logic required")
+    a_row.ShippedDate = ""  # default value
+    row_prt(a_row, "order_flush_new - default values supplied")
 
 
 # happens before flush
