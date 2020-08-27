@@ -13,7 +13,7 @@ class OrderLogic:
     """
     This is to explore *declarative* logic.  Not implemented, just imagining.
     In this approach, logic is not (mainly) code, it's spreadsheet-like expressions.
-    The engine calls these whenn referenced data changes, pruning other calls.
+    The engine calls these when (and only when) referenced data changes, pruning other calls.
 
     They apply to all changes, i.e. cover Use Cases of
     Add Order, Ship Order, UnShip Order, Delete Order
