@@ -1,3 +1,4 @@
+from builtins import function
 from typing import NewType
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -18,6 +19,17 @@ class Logic:
     def sum_rule(derive: str, as_sum_of: str, where: str = ""):
         pass
 
+    @staticmethod
+    def constraint_rule(validate: str, calling: str):
+        pass
+
+    @staticmethod
+    def formula_rule(derive: str, calling: str):
+        pass
+
+    @staticmethod
+    def copy_rule(derive: str, from_parent: str):
+        pass
 
 """"
 class Constraint(Object):

@@ -4,9 +4,37 @@ from sqlalchemy.orm import session
 
 from logic_engine.logic import Logic
 
+"""
+    Alternative 1: use named arguments
+    see Logic class, eg Logic.sum_rule(derive: str, as_sum_of: str, where: str = ""):
+
+    this is nice to read, and works well with code completion for args
+"""
+
+
+def check_balance(row, old_row, logic_context) -> bool:
+    return row.balance <= row.creditLimit
+
+
+def compute_amount(row, old_row, logic_context):
+    return row.UnitPrice <= row.Quantity
+
+
+Logic.constraint_rule(validate="Customer", calling='check_balance')
+Logic.sum_rule(derive="Customer.balance", as_sum_of="Order.AmountTotal", where="ShippedData not None")
+Logic.sum_rule(derive="Order.AmountTotal", as_sum_of="OrderDetails.Amount")
+Logic.formula_rule(derive="OrderDetails.Amount", calling="compute_amount")
+Logic.copy_rule(derive="OrderDetail.UnitPrice", from_parent="Product.UnitPrice")
+
+
+
 '''
-    cannot inherit from models.Order...
-    Can't place __table_args__ on an inherited class with no table.
+    Alternative 2: decorators
+    
+    1 class for each Domain class, but unable to inherit?...
+        cannot inherit from models.Order...
+        Can't place __table_args__ on an inherited class with no table.
+        
 '''
 
 
@@ -45,15 +73,4 @@ class OrderLogic:
     # @copy_rule OrderDetail.ProductPrice
     def derive_product_price(self):
         pass
-
-
-"""
-    Alternative: instead of decorators, use named arguments
-    see Logic class, eg Logic.sum_rule(derive: str, as_sum_of: str, where: str = ""):
-    
-    this is nice to read, and works well with code completion for args
-"""
-
-Logic.sum_rule(derive="Customer.balance", as_sum_of="Order.AmountTotal", where="ShippedData not None")
-
 
