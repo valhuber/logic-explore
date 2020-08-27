@@ -40,6 +40,29 @@ and rollup to AmountTotal / Balance to check credit
 * **Ship / Unship an Order -** when an Order's DateShippped
 is changed, adjust the Customers balance
 
+### Adjustments
+Rollups provoke an important design choice: store the aggregate,
+or sum things on the fly.  There are cases for both:
+   - **Sum** - use sql `select sum` queries to add child data as required.
+   This eliminates the consistency issues with storing redundant data
+   (i.e, the aggregate becomes invalid if an application fails to
+   adjust it in *all* of the cases).
+   
+   - **Stored Aggregates** - a good choice when data volumes are large, and / or chain,
+   since the application can **adjust** (make a 1 row update) the aggregate based on the
+   delta of the children.  Consider, for example, a customer might have
+   thousands of Orders, each with thousands of OrderDetails.
+
+This design decision can dominate application coding.  It's nefarious,
+since data volumes may not be known in advance.  (Ideally, this can be
+a "late binding" decision, like a sql index.)
+
+In this example, we use the **Stored Aggregate** approach, in order
+to investigate multi-table update logic, where updates to 1 row
+trigger updates to others rows, and then further chain to still more rows.
+Here, the stored aggregates are `Customer.Balance`, and `Order.AmountTotal`
+(a *chained* aggregate).
+
 ## Add Order: Check Credit
 
 Here we focus on placing an
@@ -53,7 +76,7 @@ The import statements runs in `nw_logic/__init__`,
 which opens the database and
 registers the listener `nw_logic/logic.py`.
 
-It forwards events`before_flush`, , mainly  to `nw_logic/order_details_code.py` and
+It forwards events`before_flush`, mainly  to `nw_logic/order_details_code.py` and
 `nw_logic/order_code.py`.
 
 ## Ship / Unship an Order: Adjust Balance

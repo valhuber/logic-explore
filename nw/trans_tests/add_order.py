@@ -5,6 +5,7 @@ from nw.nw_logic import session  # opens db, activates logic listener <--
 
 # Add Order - works
 pre_cust = session.query(models.Customer).filter(models.Customer.Id == "ALFKI").one()
+session.expunge(pre_cust)
 
 new_order = models.Order(AmountTotal=0, CustomerId="ALFKI", ShipCity="Richmond",
                          EmployeeId=6, Freight=1)
