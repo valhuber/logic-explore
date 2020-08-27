@@ -1,31 +1,20 @@
 import os
-import sys
-
 import sqlalchemy
-
-# import logic_engine.logic
-
-from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
-from typing import NewType
 import nw.nw_logic.models as models
+from nw.nw_logic import session  # opens db, activates logic listener <--
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-basedir = os.path.dirname(basedir)
-basedir = os.path.dirname(basedir)
-conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
-engine = sqlalchemy.create_engine(conn_string)
-
-# Create a session
-Session = sqlalchemy.orm.sessionmaker()
-Session.configure(bind=engine)
-session = Session()
+# first delete, so can add
+delete_cust = session.query(models.Customer).filter(models.Customer.Id == "$$New Cust").delete()
+session.commit()
 
 # Add a Customer - works
-new_cust = models.Customer(Id="$$New Cust1", )
+new_cust = models.Customer(Id="$$New Cust", )
 session.add(new_cust)
 session.commit()
 
-print("\nhello worldDB, completed\n\n")
+verify_cust = session.query(models.Customer).filter(models.Customer.Id == "$$New Cust").one()
+
+print("\nhello worldDB, completed: " + str(verify_cust) + "\n\n")
 
 assert True
