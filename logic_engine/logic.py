@@ -15,8 +15,8 @@ class LogicContext:
 
 class Logic:
     @staticmethod
-    def sum(child_row: Base):
-        return 0
+    def sum_rule(derive: str, as_sum_of: str, where: str = ""):
+        pass
 
 
 """"

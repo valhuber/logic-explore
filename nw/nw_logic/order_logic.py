@@ -2,6 +2,7 @@ from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
 import nw.nw_logic.models as models
 from sqlalchemy.orm import session
 
+from logic_engine.logic import Logic
 
 '''
     cannot inherit from models.Order...
@@ -20,6 +21,9 @@ class OrderLogic:
     Change OrderDetail qty/product, ... (~12)
 
     The sample problem is "check credit" -- executable (someday) design below.
+
+    In this approach, decorators express the logic
+    tho, formulas/constraints require Python code
     """
 
     # @constraint_rule Customer
@@ -41,3 +45,15 @@ class OrderLogic:
     # @copy_rule OrderDetail.ProductPrice
     def derive_product_price(self):
         pass
+
+
+"""
+    Alternative: instead of decorators, use named arguments
+    see Logic class, eg Logic.sum_rule(derive: str, as_sum_of: str, where: str = ""):
+    
+    this is nice to read, and works well with code completion for args
+"""
+
+Logic.sum_rule(derive="Customer.balance", as_sum_of="Order.AmountTotal", where="ShippedData not None")
+
+
