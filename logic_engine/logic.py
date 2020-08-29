@@ -17,6 +17,10 @@ class LogicContext:
 class Logic:
     @staticmethod
     def sum_rule(derive: str, as_sum_of: str, where: str = ""):
+        """
+        Sums designated child data into parent
+        Optimized to eliminate / minimize SQLs: Pruning, Adjustment Logic
+        """
         pass
 
     @staticmethod

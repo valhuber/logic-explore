@@ -74,9 +74,9 @@ Execution begins in `trans_tests/add_order.py`.
 
 The import statements run `nw_logic/__init__`,
 which opens the database and
-registers the listener `nw_logic/logic.py`.
+registers the listeners.
 
-It forwards events`before_flush`, mainly  to `nw_logic/order_details_code.py` and
+These forward `before_flush` events to `nw_logic/order_details_code.py` and
 `nw_logic/order_code.py`.
 
 ## Ship / Unship an Order: Adjust Balance

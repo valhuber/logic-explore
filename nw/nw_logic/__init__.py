@@ -2,18 +2,53 @@ import os
 
 import sqlalchemy
 from sqlalchemy import event
-from sqlalchemy.testing import db
+from sqlalchemy.orm import session
+
+from nw.nw_logic.order_code import order_commit_dirty, order_flush_dirty, order_flush_new
+from nw.nw_logic.order_detail_code import order_detail_flush_new
 
 from nw.nw_logic.models import Order
 
-from nw.nw_logic.logic import nw_before_commit, nw_before_flush
+'''
+from nw.nw_logic.listeners import nw_before_commit, nw_before_flush
 from nw.nw_logic.order_code import order_modified
+'''
 
-'''
-@event.listens_for(models.Order.ShippedDate, 'modified')
-def receive_modified(target, initiator):
-    print('Order Modified (Decorator - __init__')
-'''
+
+
+
+def nw_before_commit(a_session: session):
+    print("logic: before commit!")
+    # for obj in versioned_objects(a_session.dirty):
+    for obj in a_session.dirty:
+        print("logic: before commit! --> " + str(obj))
+        obj_class = obj.__tablename__
+        if obj_class == "Order":
+            order_commit_dirty(obj, a_session)
+        elif obj_class == "OrderDetail":
+            print("Stub")
+    print("logic called: before commit!  EXIT")
+
+
+def nw_before_flush(a_session: session, a_flush_context, an_instances):
+    print("nw_before_flush")
+    for each_instance in a_session.dirty:
+        print("nw_before_flush flushing Dirty! --> " + str(each_instance))
+        obj_class = each_instance.__tablename__
+        if obj_class == "Order":
+            order_flush_dirty(each_instance, a_session)
+        elif obj_class == "OrderDetail":
+            print("Stub")
+
+    for each_instance in a_session.new:
+        print("nw_before_flush flushing New! --> " + str(each_instance))
+        obj_class = each_instance.__tablename__
+        if obj_class == "OrderDetail":
+            order_detail_flush_new(each_instance, a_session)
+        elif obj_class == "Order":
+            order_flush_new(each_instance, a_session)
+
+    print("nw_before_flush  EXIT")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 basedir = os.path.dirname(basedir)
@@ -21,6 +56,25 @@ basedir = os.path.dirname(basedir)
 conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
 # e.g. 'sqlite:////Users/val/python/vsc/logic-explore/nw-app/nw.db'
 engine = sqlalchemy.create_engine(conn_string, echo=False)  # sqlalchemy sqls...
+
+# Create a session
+session_maker = sqlalchemy.orm.sessionmaker()
+session_maker.configure(bind=engine)
+session = session_maker()
+
+# target, modifier, function
+event.listen(session, "before_commit", nw_before_commit)
+event.listen(session, "before_flush", nw_before_flush)
+
+# event.listen(Order.ShippedDate, "set", order_modified)
+print("session created, listeners registered")
+
+
+'''
+@event.listens_for(models.Order.ShippedDate, 'modified')
+def receive_modified(target, initiator):
+    print('Order Modified (Decorator - __init__')
+'''
 
 '''
 @event.listens_for(Order, 'before_update')
@@ -41,15 +95,3 @@ def before_update(mapper, connection, target):
     # now changes map keys to new values
     print ("before update")
 '''
-
-# Create a session
-session_maker = sqlalchemy.orm.sessionmaker()
-session_maker.configure(bind=engine)
-session = session_maker()
-
-# target, modifier, function
-event.listen(session, "before_commit", nw_before_commit)
-event.listen(session, "before_flush", nw_before_flush)
-
-# event.listen(Order.ShippedDate, "set", order_modified)
-print("session created, listeners registered")
