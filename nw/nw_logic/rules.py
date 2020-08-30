@@ -12,20 +12,19 @@ from logic_engine.logic import Logic
 """
 
 
-def check_balance(row, old_row, logic_context) -> bool:
-    return row.balance <= row.creditLimit
+class NwLogic(object):
 
+    def check_balance(row, old_row, logic_context) -> bool:
+        return row.balance <= row.creditLimit
 
-def compute_amount(row, old_row, logic_context):
-    return row.UnitPrice <= row.Quantity
+    def compute_amount(row, old_row, logic_context):
+        return row.UnitPrice <= row.Quantity
 
-
-Logic.constraint_rule(validate="Customer", calling='check_balance')
-Logic.sum_rule(derive="Customer.balance", as_sum_of="Order.AmountTotal", where="ShippedData not None")
-Logic.sum_rule(derive="Order.AmountTotal", as_sum_of="OrderDetails.Amount")
-Logic.formula_rule(derive="OrderDetails.Amount", calling="compute_amount")
-Logic.copy_rule(derive="OrderDetail.UnitPrice", from_parent="Product.UnitPrice")
-
+    Logic.constraint_rule(validate="Customer", calling='check_balance')
+    Logic.sum_rule(derive="Customer.balance", as_sum_of="Order.AmountTotal", where="ShippedData not None")
+    Logic.sum_rule(derive="Order.AmountTotal", as_sum_of="OrderDetails.Amount")
+    Logic.formula_rule(derive="OrderDetails.Amount", calling="compute_amount")
+    Logic.copy_rule(derive="OrderDetail.UnitPrice", from_parent="Product.UnitPrice")
 
 
 '''

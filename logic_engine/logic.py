@@ -1,6 +1,9 @@
-from builtins import function
-from typing import NewType
 from sqlalchemy.ext.declarative import declarative_base
+
+from logic_engine.rule_type.constraint import Constraint
+from logic_engine.rule_type.copy import Copy
+from logic_engine.rule_type.formula import Formula
+from logic_engine.rule_type.sum import Sum
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -21,19 +24,19 @@ class Logic:
         Sums designated child data into parent
         Optimized to eliminate / minimize SQLs: Pruning, Adjustment Logic
         """
-        pass
+        Sum(derive, as_sum_of, where)
 
     @staticmethod
     def constraint_rule(validate: str, calling: str):
-        pass
+        Constraint(validate, calling)  # --> load_logic
 
     @staticmethod
     def formula_rule(derive: str, calling: str):
-        pass
+        Formula(derive=derive, calling=calling)
 
     @staticmethod
     def copy_rule(derive: str, from_parent: str):
-        pass
+        Copy(derive, from_parent)
 
 """"
 class Constraint(Object):

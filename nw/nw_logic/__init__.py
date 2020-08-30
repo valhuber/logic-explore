@@ -4,6 +4,7 @@ import sqlalchemy
 from sqlalchemy import event
 from sqlalchemy.orm import session
 
+from logic_engine.logic_loader.load_logic import LoadLogic
 from nw.nw_logic.order_code import order_commit_dirty, order_flush_dirty, order_flush_new
 from nw.nw_logic.order_detail_code import order_detail_flush_new
 
@@ -57,6 +58,16 @@ basedir = os.path.dirname(basedir)
 conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
 # e.g. 'sqlite:////Users/val/python/vsc/logic-explore/nw-app/nw.db'
 engine = sqlalchemy.create_engine(conn_string, echo=False)  # sqlalchemy sqls...
+
+do_logic = True
+rule_list = None
+db = None
+if do_logic:
+    rule_list = LoadLogic(conn_string)
+    from .rules import NwLogic
+    db = str(rule_list)
+    db = rule_list.__str__()
+    print("logic loaded:\n" + str(rule_list))
 
 # Create a session
 session_maker = sqlalchemy.orm.sessionmaker()

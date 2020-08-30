@@ -1,3 +1,5 @@
+import inspect
+
 from sqlalchemy.exc import UnmappedColumnError
 from sqlalchemy.orm import attributes, object_mapper
 
@@ -117,3 +119,9 @@ def row_to_string(obj) -> str:
 def row_prt(obj: object, a_msg: str = ""):
     prt = row_to_string(obj)
     print(a_msg + ", " + prt)
+
+
+def prt(a_msg: str) -> str:
+    cur_frame = inspect.currentframe()
+    call_frame = inspect.getouterframes(cur_frame, 2)
+    return f'{call_frame[1][3]}: {a_msg}'

@@ -17,10 +17,8 @@ Alternatives:
     sqlalchemy Engine Plug-in
 
 """
+import logging
 
-tables = {}  # dict, key is table name, members are lists of rules
-
-
-def listx():
-    print("\n\nRules by table:\n")
+logic_logger = logging.getLogger('logic_logger')  # for users
+engine_logger = logging.getLogger('engine_logger')  # internals
 
