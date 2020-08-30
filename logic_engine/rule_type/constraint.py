@@ -11,7 +11,7 @@ class Constraint(Rule):
         # self.table = validate  # setter finds object
         self._function = calling
         ll = RuleBank("")
-        ll.load_rule(self)
+        ll.deposit_rule(self)
 
     def __str__(self):
         return f'Constraint Function: {str(self._function)} '

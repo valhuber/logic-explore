@@ -8,7 +8,7 @@ class Formula(Derivation):
         super(Formula, self).__init__(derive)
         self._function = calling
         rb = RuleBank("")
-        rb.load_rule(self)
+        rb.deposit_rule(self)
 
     def __str__(self):
         return super().__str__() + \

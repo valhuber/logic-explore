@@ -12,7 +12,7 @@ class Sum(Aggregate):
         self._as_sum_of = as_sum_of  # could probably super-ize parent accessor
         self._where = where
         rb = RuleBank("")
-        rb.load_rule(self)
+        rb.deposit_rule(self)
 
     def __str__(self):
         if self._where != "":

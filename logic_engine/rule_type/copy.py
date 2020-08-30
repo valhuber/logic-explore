@@ -10,7 +10,7 @@ class Copy(Derivation):
         self._from_table = names[0]
         self._from_column = names[1]
         rb = RuleBank("")
-        rb.load_rule(self)
+        rb.deposit_rule(self)
 
     def __str__(self):
         return super().__str__() + \

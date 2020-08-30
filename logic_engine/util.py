@@ -45,7 +45,7 @@ def get_old_row(obj) -> ObjectView:
                 # expired object attributes and also deferred cols might not
                 # be in the dict.  force it to load no matter what by
                 # using getattr().
-            if prop.key == "ShippedDate":
+            if prop.key == "ShippedDatexxx":
                 print("DEBUG - changed column")  # stop here!
             if prop.key not in obj_state.dict:
                 getattr(obj, prop.key)
