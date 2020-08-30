@@ -1,5 +1,5 @@
 from logic_engine import engine_logger
-from logic_engine.utli import prt
+from logic_engine.util import prt
 from logic_engine.rule_type.rule import Rule
 from datetime import datetime
 
