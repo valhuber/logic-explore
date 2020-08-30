@@ -1,4 +1,4 @@
-from logic_engine.logic_loader.load_logic import LoadLogic
+from logic_engine.logic_loader.rule_bank import RuleBank
 from logic_engine.rule_type.rule import Rule
 
 
@@ -10,8 +10,8 @@ class Constraint(Rule):
         super(Constraint, self).__init__(validate)
         # self.table = validate  # setter finds object
         self._function = calling
-        ll = LoadLogic("")
+        ll = RuleBank("")
         ll.load_rule(self)
 
     def __str__(self):
-        return f'Constraint for table: {self.table}, function: {str(self._function)} '
+        return f'Constraint Function: {str(self._function)} '
