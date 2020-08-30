@@ -64,7 +64,7 @@ rule_list = None
 db = None
 if do_logic:
     rule_bank = RuleBank(conn_string)
-    from .rules import NwLogic
+    from .nw_rules_bank import NwLogic
     print("\n\nlogic loaded:\n" + str(rule_bank))
 
 # Create a session
