@@ -23,7 +23,7 @@ class NwLogic(object):
     Logic.constraint_rule(validate="Customer", calling='check_balance')
     Logic.sum_rule(derive="Customer.balance", as_sum_of="Order.AmountTotal", where="ShippedData not None")
     Logic.sum_rule(derive="Order.AmountTotal", as_sum_of="OrderDetails.Amount")
-    Logic.formula_rule(derive="OrderDetails.Amount", calling="compute_amount")
+    Logic.formula_rule(derive="OrderDetail.Amount", calling="compute_amount")
     Logic.copy_rule(derive="OrderDetail.UnitPrice", from_parent="Product.UnitPrice")
 
 

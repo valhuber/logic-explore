@@ -21,22 +21,33 @@ class Logic:
     @staticmethod
     def sum_rule(derive: str, as_sum_of: str, where: str = ""):
         """
-        Sums designated child data into parent
+        Sums declare parent column as sum of designated child column
         Optimized to eliminate / minimize SQLs: Pruning, Adjustment Logic
         """
         Sum(derive, as_sum_of, where)
 
     @staticmethod
     def constraint_rule(validate: str, calling: str):
+        """
+        Constraints declare condition that must be true for all commits
+        """
         Constraint(validate, calling)  # --> load_logic
 
     @staticmethod
     def formula_rule(derive: str, calling: str):
+        """
+        Formulas declare column value, based on current and parent rows
+        Parent changes are propagated to child row(s)
+        """
         Formula(derive=derive, calling=calling)
 
     @staticmethod
     def copy_rule(derive: str, from_parent: str):
-        Copy(derive, from_parent)
+        """
+        Copy declares child column copied from parent column
+        Unlike formulas references, parent changes are *not* propagated to children
+        """
+        Copy(derive=derive, from_parent=from_parent)
 
 """"
 class Constraint(Object):
