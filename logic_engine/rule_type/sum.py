@@ -11,7 +11,7 @@ class Sum(Aggregate):
         super(Sum, self).__init__(derive)
         self._as_sum_of = as_sum_of  # could probably super-ize parent accessor
         self._where = where
-        rb = RuleBank("")
+        rb = RuleBank()
         rb.deposit_rule(self)
 
     def __str__(self):

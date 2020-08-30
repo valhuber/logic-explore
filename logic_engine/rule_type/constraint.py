@@ -10,7 +10,7 @@ class Constraint(Rule):
         super(Constraint, self).__init__(validate)
         # self.table = validate  # setter finds object
         self._function = calling
-        ll = RuleBank("")
+        ll = RuleBank()
         ll.deposit_rule(self)
 
     def __str__(self):

@@ -9,7 +9,7 @@ class Copy(Derivation):
         names = from_parent.split('.')
         self._from_table = names[0]
         self._from_column = names[1]
-        rb = RuleBank("")
+        rb = RuleBank()
         rb.deposit_rule(self)
 
     def __str__(self):

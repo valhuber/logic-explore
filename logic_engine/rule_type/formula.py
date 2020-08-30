@@ -7,7 +7,7 @@ class Formula(Derivation):
     def __init__(self, derive: str, calling: str):
         super(Formula, self).__init__(derive)
         self._function = calling
-        rb = RuleBank("")
+        rb = RuleBank()
         rb.deposit_rule(self)
 
     def __str__(self):

@@ -1,4 +1,8 @@
+from sqlalchemy import event
+from sqlalchemy.orm import session
+
 from logic_engine import engine_logger
+from logic_engine.rule_exec.listeners import before_flush
 from logic_engine.util import prt
 from logic_engine.rule_type.rule import Rule
 from datetime import datetime
@@ -21,15 +25,16 @@ class RuleBank(object):
     scans for rules, creates the logic_repository
     """
 
-    _url = ""
     _tables = {}  # key = tbl_name, value = list of rules
     _at = datetime.now()
+    _session = None
 
-    def __init__(self, url: str = ""):
-        if self._url != "":  # FIXME is this right?
-            _url = url
-            _tables = {}
-            _at = datetime.now()
+    def __init__(self, a_session: session=None):
+        if self._session is not None:  # FIXME is this right?
+            self._session = a_session
+            event.listen(a_session, "before_flush", before_flush)
+            self._tables = {}
+            self._at = datetime.now()
 
     def deposit_rule(self, a_rule: Rule):
         engine_logger.debug(prt(" GGGG begin"))
