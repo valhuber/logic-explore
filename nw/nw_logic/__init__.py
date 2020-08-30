@@ -59,18 +59,19 @@ conn_string = "sqlite:///" + os.path.join(basedir, "nw-app/nw.db")
 # e.g. 'sqlite:////Users/val/python/vsc/logic-explore/nw-app/nw.db'
 engine = sqlalchemy.create_engine(conn_string, echo=False)  # sqlalchemy sqls...
 
-do_logic = True
-rule_list = None
-db = None
-if do_logic:
-    rule_bank = RuleBank(conn_string)
-    from .nw_rules_bank import NwLogic
-    print("\n\nlogic loaded:\n" + str(rule_bank))
 
 # Create a session
 session_maker = sqlalchemy.orm.sessionmaker()
 session_maker.configure(bind=engine)
 session = session_maker()
+
+do_logic = True
+rule_list = None
+db = None
+if do_logic:
+    rule_bank = RuleBank(session)
+    from .nw_rules_bank import NwLogic
+    print("\n\nlogic loaded:\n" + str(rule_bank))
 
 # target, modifier, function
 event.listen(session, "before_commit", nw_before_commit)
