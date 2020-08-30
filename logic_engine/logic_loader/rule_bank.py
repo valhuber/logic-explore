@@ -30,7 +30,7 @@ class RuleBank(object):
     _session = None
 
     def __init__(self, a_session: session=None):
-        if self._session is not None:  # FIXME is this right?
+        if a_session is not None:  # FIXME is this right?
             self._session = a_session
             event.listen(a_session, "before_flush", before_flush)
             self._tables = {}
