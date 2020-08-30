@@ -1,9 +1,4 @@
-from logic_engine import logic  # see .env file (or pycharm Add Content Roots)
-import nw.nw_logic.models as models
-from sqlalchemy.orm import session
-
 from logic_engine.logic import Logic
-from logic_engine.rule_type.sum import Sum
 
 """
     Alternative 1: use named arguments

@@ -2,7 +2,7 @@ from sqlalchemy import event
 from sqlalchemy.orm import session
 
 from logic_engine import engine_logger
-from logic_engine.rule_exec.listeners import before_flush
+from logic_engine.exec_trans_logic.listeners import before_flush
 from logic_engine.util import prt
 from logic_engine.rule_type.rule import Rule
 from datetime import datetime
@@ -29,7 +29,7 @@ class RuleBank(object):
     _at = datetime.now()
     _session = None
 
-    def __init__(self, a_session: session=None):
+    def __init__(self, a_session: session = None):
         if a_session is not None:  # FIXME is this right?
             self._session = a_session
             event.listen(a_session, "before_flush", before_flush)
@@ -43,7 +43,7 @@ class RuleBank(object):
         self._tables[a_rule.table].append(a_rule)
 
     def __str__(self):
-        result = f"Rule Bank (loaded {self._at})"
+        result = f"Rule Bank[{str(hex(id(self)))}] (loaded {self._at})"
         for each_key in self._tables:
             result += f"\nTable[{each_key}] rules:"
             for each_rule in self._tables[each_key]:

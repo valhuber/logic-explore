@@ -71,6 +71,7 @@ db = None
 if do_logic:
     rule_bank = RuleBank(session)
     from .nw_rules_bank import NwLogic
+    rule_bank = RuleBank()  # FIXME - not clear why this returns the singleton, vs 2 lines above
     print("\n\nlogic loaded:\n" + str(rule_bank))
 
 # target, modifier, function
