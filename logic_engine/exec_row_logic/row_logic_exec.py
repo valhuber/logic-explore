@@ -1,9 +1,9 @@
-from logic_engine.exec_row_logic.row_logic_state import RowLogicState
+from logic_engine.exec_row_logic.logic_row import LogicRow
 
 
 class RowLogicExec:
 
-    def __init__(self, a_row_logic_state: RowLogicState):
+    def __init__(self, a_row_logic_state: LogicRow):
         self.row_logic_state = a_row_logic_state
 
     def log(self, msg: str):
@@ -22,7 +22,7 @@ class RowLogicExec:
         self.log("adjust_parent_aggregates")
         """
             for each_parent_role
-                parent_adjuster = ParentAdjuster(self, each_parent_role)  # NB - 1 parent save for N sums/counts
+                parent_adjuster = ParentRoleAdjuster(self, each_parent_role)  # NB - 1 parent save for N sums/counts
                 for each_aggregate in each_parent_role
                     each_aggregate.adjust_parent(adjuster)  # adjusts each_parent iff req'd
                 parent_adjuster.save_altered_parents()

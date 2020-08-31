@@ -1,5 +1,5 @@
 
-class ParentAdjuster:
+class ParentRoleAdjuster:
     """
     Passed to <aggregate>.adjust_parent who will set parent row(s) values
     iff adjustment is required (e.g., summed value changes, where changes, fk changes, etc)

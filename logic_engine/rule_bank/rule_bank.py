@@ -45,10 +45,10 @@ class RuleBank(object):
         return self
 
     def deposit_rule(self, a_rule: Rule):
-        engine_logger.debug(prt(" GGGG begin"))
         if a_rule.table not in self._tables:
             self._tables[a_rule.table] = []
         self._tables[a_rule.table].append(a_rule)
+        engine_logger.debug(prt(str(a_rule)))
 
     def __str__(self):
         result = f"Rule Bank[{str(hex(id(self)))}] (loaded {self._at})"

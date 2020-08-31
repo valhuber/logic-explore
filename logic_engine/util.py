@@ -1,4 +1,5 @@
 import inspect
+import os
 
 from sqlalchemy.exc import UnmappedColumnError
 from sqlalchemy.orm import attributes, object_mapper
@@ -117,11 +118,18 @@ def row_to_string(obj) -> str:
 
 
 def row_prt(obj: object, a_msg: str = ""):
-    prt = row_to_string(obj)
-    print(a_msg + ", " + prt)
+    msg = row_to_string(obj)
+    print(a_msg + ", " + msg)
 
 
 def prt(a_msg: str) -> str:
+    """Returns file>method + a_msg
+    (debug tracing)
+    """
     cur_frame = inspect.currentframe()
     call_frame = inspect.getouterframes(cur_frame, 2)
-    return f'{call_frame[1][3]}: {a_msg}'
+    function_name = call_frame[1][3]
+    file_name = call_frame[1][1]
+    file_name = os.path.basename(file_name)
+    result = f'@{file_name}>{function_name}(): {a_msg}'
+    return result

@@ -10,6 +10,7 @@ from logic_engine.util import get_old_row, row_prt
 def customer_flush_dirty(a_row, a_session: session):
     """
     Called from listeners.py on before_flush
+    FIXME NOT called from updates in Order before_flush
     E.g., altering an Order ShippedDate (we must adjust Customer balance)
     """
     old_row = get_old_row(a_row)
