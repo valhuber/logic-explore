@@ -1,10 +1,3 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.schema import SchemaItem
-from sqlalchemy_utils import get_class_by_table
-
-# from logic_engine.logic import Base
-
-
 class Rule(object):
 
     table = None

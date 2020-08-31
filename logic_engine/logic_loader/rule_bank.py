@@ -36,6 +36,14 @@ class RuleBank(object):
             self._tables = {}
             self._at = datetime.now()
 
+    def setup(self, a_session: session = None):
+        if a_session is not None:  # FIXME is this right?
+            self._session = a_session
+            event.listen(a_session, "before_flush", before_flush)
+            self._tables = {}
+            self._at = datetime.now()
+        return self
+
     def deposit_rule(self, a_rule: Rule):
         engine_logger.debug(prt(" GGGG begin"))
         if a_rule.table not in self._tables:

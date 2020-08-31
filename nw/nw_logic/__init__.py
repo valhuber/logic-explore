@@ -69,9 +69,9 @@ do_logic = True
 rule_list = None
 db = None
 if do_logic:
-    rule_bank = RuleBank(session)
+    rule_bank = RuleBank().setup(session)
     from .nw_rules_bank import NwLogic
-    rule_bank = RuleBank()  # FIXME - not clear why this returns the singleton, vs 2 lines above
+    rule_bank = RuleBank()  # FIXME - unclear why this returns the *correct* singleton, vs 2 lines above
     print("\n\nlogic loaded:\n" + str(rule_bank))
 
 # target, modifier, function
