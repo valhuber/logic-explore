@@ -4,7 +4,7 @@ import sqlalchemy
 from sqlalchemy import event
 from sqlalchemy.orm import session
 
-from logic_engine.logic_loader.rule_bank import RuleBank
+from logic_engine.rule_bank.rule_bank import RuleBank
 from nw.nw_logic.order_code import order_commit_dirty, order_flush_dirty, order_flush_new
 from nw.nw_logic.order_detail_code import order_detail_flush_new
 

@@ -1,4 +1,4 @@
-from logic_engine.logic_loader.rule_bank import RuleBank
+from logic_engine.rule_bank.rule_bank import RuleBank
 from logic_engine.rule_type.rule import Rule
 
 
