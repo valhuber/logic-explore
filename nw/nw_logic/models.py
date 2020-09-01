@@ -67,7 +67,10 @@ class Employee(Base):
     Notes = Column(String(8000))
     ReportsTo = Column(Integer)
     PhotoPath = Column(String(8000))
-
+    OrderList = relationship("Order", cascade_backrefs=True)
+# not sure about this... adding backref="Order" causes this failure:
+# "Error creating backref 'Employee' on relationship 'Employee.OrderList':
+#   property of that name exists on mapper 'mapped class Order->Order'"
 
 class Product(Base):
     __tablename__ = 'Product'
@@ -205,7 +208,7 @@ class Order(Base):
 
     Id = Column(Integer, primary_key=True)  #, autoincrement=True)
     CustomerId = Column(ForeignKey('Customer.Id'))
-    EmployeeId = Column(Integer, nullable=False)
+    EmployeeId = Column(ForeignKey('Employee.Id'))
     OrderDate = Column(String(8000))
     RequiredDate = Column(String(8000))
     ShippedDate = Column(String(8000))
@@ -220,6 +223,7 @@ class Order(Base):
     AmountTotal = Column(DECIMAL)
 
     Customer = relationship('Customer')
+    Employee = relationship('Employee')
 
     OrderDetailList = relationship("OrderDetail",
                                    backref="OrderHeader",

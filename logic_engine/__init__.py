@@ -45,6 +45,7 @@ Design Issues:
     * rows as dict{}, or sqlalchemy.ext.declarative.api.Base.<thing>
         https://stackoverflow.com/questions/553784/can-you-use-a-string-to-instantiate-a-class
         getattr(sa_row, "attrName")
+    * do sqlalchemy joins preserve table identity?
         
 Design Notes:
     * exec code: https://www.geeksforgeeks.org/eval-in-python/

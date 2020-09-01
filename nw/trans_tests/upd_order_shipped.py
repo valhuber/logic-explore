@@ -7,7 +7,10 @@ from nw.nw_logic import session  # opens db, activates logic listener <--
 
 
 """ toggle Shipped Date, to trigger balance adjustment """
-test_order = session.query(models.Order).filter(models.Order.Id == 11011).one()
+""" also test join.
+session.query(Customer).join(Invoice).filter(Invoice.amount == 8500).all()
+"""
+test_order = session.query(models.Order).filter(models.Order.Id == 11011).join(models.Employee).one()
 if test_order.ShippedDate is None or test_order.ShippedDate == "":
     test_order.ShippedDate = str(datetime.now())
     print("shipping: ['' -> " + test_order.ShippedDate + "]")
@@ -19,4 +22,5 @@ else:
 insp = inspect(test_order)
 session.commit()
 print("\nupd_order, completed\n\n")
+# TODO check Customer Balance correctly adjusted
 
