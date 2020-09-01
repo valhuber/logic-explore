@@ -5,7 +5,7 @@ from sqlalchemy import event
 from sqlalchemy.orm import session
 
 from logic_engine.rule_bank.rule_bank import RuleBank
-from logic_engine.rule_bank import withdraw
+from logic_engine.rule_bank import rule_bank_withdraw
 from logic_engine.rule_type.constraint import Constraint
 from logic_engine.rule_type.formula import Formula
 from nw.nw_logic.order_code import order_commit_dirty, order_flush_dirty, order_flush_new
@@ -75,10 +75,10 @@ if do_logic:
     rule_bank = RuleBank().setup(session)
     from .nw_rules_bank import NwLogic
     rule_bank = RuleBank()  # FIXME - unclear why this returns the *correct* singleton, vs 2 lines above
-    copies = withdraw.copy_rules("OrderDetail")
-    sums = withdraw.aggregate_rules("Customer")
-    constraints = withdraw.rules_of_class("Customer", Constraint)
-    formulas = withdraw.rules_of_class("OrderDetail", Formula)
+    copies = rule_bank_withdraw.copy_rules("OrderDetail")
+    aggregates = rule_bank_withdraw.aggregate_rules("Customer")
+    constraints = rule_bank_withdraw.rules_of_class("Customer", Constraint)
+    formulas = rule_bank_withdraw.rules_of_class("OrderDetail", Formula)
     print("\n\nlogic loaded:\n" + str(rule_bank))
 
 # target, modifier, function
