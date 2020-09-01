@@ -7,11 +7,11 @@ class Copy(Derivation):
     def __init__(self, derive: str, from_parent: str):
         super(Copy, self).__init__(derive)
         names = from_parent.split('.')
-        self._from_table = names[0]
+        self._from_parent_role = names[0]
         self._from_column = names[1]
         rb = RuleBank()
         rb.deposit_rule(self)
 
     def __str__(self):
         return super().__str__() + \
-               f'Copy({self._from_table}.{self._from_column})'
+               f'Copy({self._from_parent_role}.{self._from_column})'

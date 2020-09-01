@@ -30,7 +30,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logic_logger.addHandler(handler)
 
-engine_logger = logging.getLogger('engine_logger')  # internals
+engine_logger = logging.getLogger('engine_logger')  # for internals
 engine_logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler(sys.stdout)
 handler.setLevel(logging.DEBUG)

@@ -5,11 +5,13 @@ from logic_engine.rule_type.aggregate import Aggregate
 class Sum(Aggregate):
 
     _as_sum_of = ""
+    _from_parent_role = ""
     _where = ""
 
     def __init__(self, derive: str, as_sum_of: str, where: str):
         super(Sum, self).__init__(derive)
         self._as_sum_of = as_sum_of  # could probably super-ize parent accessor
+        self._from_parent_role = self._as_sum_of.split(".")[0]
         self._where = where
         rb = RuleBank()
         rb.deposit_rule(self)

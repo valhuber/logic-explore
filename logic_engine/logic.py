@@ -2,6 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from logic_engine.rule_type.constraint import Constraint
 from logic_engine.rule_type.copy import Copy
+from logic_engine.rule_type.count import Count
 from logic_engine.rule_type.formula import Formula
 from logic_engine.rule_type.sum import Sum
 
@@ -25,6 +26,14 @@ class Logic:
         Optimized to eliminate / minimize SQLs: Pruning, Adjustment Logic
         """
         Sum(derive, as_sum_of, where)
+
+    @staticmethod
+    def count_rule(derive: str, as_count_of: str, where: str = ""):
+        """
+        Sums declare parent column as sum of designated child rows
+        Optimized to eliminate / minimize SQLs: Pruning, Adjustment Logic
+        """
+        Count(derive, as_count_of, where)
 
     @staticmethod
     def constraint_rule(validate: str, calling: str):
