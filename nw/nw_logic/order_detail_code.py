@@ -23,7 +23,6 @@ def order_detail_flush_new(a_row, a_session: session):
             1. can't just alter AmountTotal - does not trigger Order's before_flush
             2. can't just call Order's before_flush - old values not available
     """
-    # hydrate_row(order)  # FIXME - remove (not required?)
     old_order = ObjectView(row2dict(order))  # hmm... key ShippedDate vs. "ShippedDate"
     order.AmountTotal += a_row.Amount
     order_update(order, old_order, a_session)

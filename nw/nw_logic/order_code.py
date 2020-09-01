@@ -3,10 +3,13 @@ from sqlalchemy import event
 import nw.nw_logic.models as models
 from sqlalchemy.orm import session
 
-from logic_engine.util import get_old_row, row_prt
+from logic_engine.util import get_old_row, row_prt, row2dict, ObjectView
 
 
 # https://docs.sqlalchemy.org/en/13/_modules/examples/versioned_history/history_meta.html
+from nw.nw_logic.customer_code import customer_update
+
+
 def order_flush_dirty(a_row, a_session: session):
     """
     Called from listeners.py on before_flush
@@ -39,10 +42,11 @@ def order_update(a_row, an_old_row, a_session):
         # nice try customer = a_row.Customer
         customer = a_session.query(models.Customer). \
             filter(models.Customer.Id == a_row.CustomerId).one()
-
+        old_customer = ObjectView(row2dict(customer))
         delta = a_row.AmountTotal - an_old_row.AmountTotal
         customer.Balance += delta  # attach, update not req'd
         a_session.add(customer)
+        customer_update(customer, old_customer, a_session)
         row_prt(customer, "order_upd adjusted Customer, per AmountTotal change")
 
 
