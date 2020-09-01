@@ -10,10 +10,24 @@ class LogicRow:
         self.nest_level = nest_level
 
     def __str__(self):
-        result = self.row.__tablename__ + "[]: "  # TODO add [pk]
-        cols = self.row.__table__.columns
+        result = self.row.__tablename__ + "["  # TODO add [pk]
+        my_meta = self.row.metadata.tables[type(self.row).__name__]
+        key_cols = my_meta.primary_key.columns.keys()
         is_first = True
-        for each_col in cols:
+        for each_key_col in key_cols:
+            if not is_first:
+                result += " | "
+            is_first = False
+            value = getattr(self.row, each_key_col)
+            if isinstance(value, str):
+                result += value
+            else:
+                result += str(value)
+        result += "] "
+        cols = self.row.__table__.columns
+        sorted_cols = sorted(cols, key=lambda col: col.name)
+        is_first = True
+        for each_col in sorted_cols:
             each_col_name = each_col.name
             if not is_first:
                 result += ", "
