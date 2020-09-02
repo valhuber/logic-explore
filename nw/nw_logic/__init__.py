@@ -6,6 +6,7 @@ from sqlalchemy.orm import session
 
 from logic_engine.rule_bank.rule_bank import RuleBank
 from logic_engine.rule_bank import rule_bank_withdraw
+from logic_engine.rule_bank import rule_bank_setup
 from logic_engine.rule_type.constraint import Constraint
 from logic_engine.rule_type.formula import Formula
 from nw.nw_logic.order_code import order_commit_dirty, order_flush_dirty, order_flush_new
@@ -72,7 +73,8 @@ do_logic = True
 rule_list = None
 db = None
 if do_logic:
-    rule_bank = RuleBank().setup(session)
+    rule_bank = RuleBank()
+    rule_bank_setup.setup(session)
     from .nw_rules_bank import NwLogic
     rule_bank = RuleBank()  # FIXME - unclear why this returns the *correct* singleton, vs 2 lines above
     copies = rule_bank_withdraw.copy_rules("OrderDetail")

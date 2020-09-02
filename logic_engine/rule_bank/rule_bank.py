@@ -1,8 +1,4 @@
-from sqlalchemy import event
-from sqlalchemy.orm import session
-
 from logic_engine import engine_logger
-from logic_engine.exec_trans_logic.listeners import before_flush
 from logic_engine.util import prt
 from logic_engine.rule_type.rule import Rule
 from datetime import datetime
@@ -29,20 +25,8 @@ class RuleBank(object):
     _at = datetime.now()
     _session = None
 
-    def __init__(self, a_session: session = None):
-        if a_session is not None:  # FIXME is this right?
-            self._session = a_session
-            event.listen(a_session, "before_flush", before_flush)
-            self._tables = {}
-            self._at = datetime.now()
-
-    def setup(self, a_session: session = None):
-        if a_session is not None:  # FIXME is this right?
-            self._session = a_session
-            event.listen(a_session, "before_flush", before_flush)
-            self._tables = {}
-            self._at = datetime.now()
-        return self
+    def __init__(self):
+        pass
 
     def deposit_rule(self, a_rule: Rule):
         if a_rule.table not in self._tables:

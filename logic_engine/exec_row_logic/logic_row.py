@@ -9,9 +9,12 @@ class LogicRow:
         self.ins_upd_dlt = ins_upd_dlt
         self.nest_level = nest_level
 
+    def table_meta(self):
+        return self.row.metadata.tables[type(self.row).__name__]
+
     def __str__(self):
-        result = self.row.__tablename__ + "["  # TODO add [pk]
-        my_meta = self.row.metadata.tables[type(self.row).__name__]
+        result = self.row.__tablename__ + "["
+        my_meta = self.table_meta()
         key_cols = my_meta.primary_key.columns.keys()
         is_first = True
         for each_key_col in key_cols:
