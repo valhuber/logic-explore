@@ -12,6 +12,12 @@ class LogicRow:
     def table_meta(self):
         return self.row.metadata.tables[type(self.row).__name__]
 
+    def get_parent(self, role_name: str):  # TODO typed rows...
+        return self  # FIXME placeholder, implementation required
+
+    def is_different_parent(self, role_name: str) -> bool:
+        return False # FIXME placeholder, implementation required
+
     def __str__(self):
         result = self.row.__tablename__ + "["
         my_meta = self.table_meta()

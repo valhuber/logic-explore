@@ -5,10 +5,10 @@ from logic_engine.rule_bank import rule_bank_withdraw
 class RowLogicExec:
 
     def __init__(self, logic_row: LogicRow):
-        self.row_logic_state = logic_row
+        self.logic_row = logic_row
 
     def __str__(self) -> str:
-        return str(self.row_logic_state)
+        return str(self.logic_row)
 
     def log(self, msg: str):
         print(msg + ": " + str(self))  # more on this later
@@ -19,6 +19,14 @@ class RowLogicExec:
     def copy_rules(self):
         self.log("copy_rules")
         copy_rules = rule_bank_withdraw.copy_rules("OrderDetail")
+        for role_name, copy_rules_for_table in copy_rules.items():
+            logic_row = self.logic_row
+            if logic_row.ins_upd_dlt == "ins" or logic_row.is_different_parent(role_name):
+                parent = logic_row.get_parent(role_name)
+                for each_copy_rule in copy_rules_for_table:
+                    each_column_name = each_copy_rule._column
+                    each_column_value = getattr(parent.row, each_copy_rule._from_column)
+                    setattr(self.logic_row.row, each_column_name, each_column_value)
 
     def formula_rules(self):
         self.log("formula_rules")

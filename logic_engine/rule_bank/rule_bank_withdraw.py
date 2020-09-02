@@ -1,3 +1,5 @@
+from typing import TypedDict, List
+
 from logic_engine.rule_bank.rule_bank import RuleBank
 from logic_engine.rule_type.constraint import Constraint
 from logic_engine.rule_type.copy import Copy
@@ -16,7 +18,12 @@ class RoleRules:
         self._role_rules = []  # list of rule objects
 
 
-def copy_rules(a_table_name: str) -> dict:
+class CopyRulesForTable(TypedDict):
+    copy_rules: List[Copy]
+    label: str
+
+
+def copy_rules(a_table_name: str) -> CopyRulesForTable:
     """dict(<role_name>, copy_rules[]
     """
     rule_bank = RuleBank()
