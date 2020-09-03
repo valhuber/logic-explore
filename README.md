@@ -7,7 +7,7 @@ using sqlalchemy events
 * web app using Flask AppBuilder's Quickstart
 
 ## Installation
-Use pycharm, and pip install from `requirements.txt`.
+Use pycharm, and `pip install -f requirements.txt`.
 
 ## Background
 The subject database is an adaption of nw,
