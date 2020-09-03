@@ -1,10 +1,10 @@
 # coding: utf-8
 
-'''
+"""
 WARNING: used in nw_logic, but FAB uses version in nw-app/app
 The primary copy is here -- copy changes to nw-app/app.
-'''
-
+"""
+import sqlalchemy_utils
 from sqlalchemy import Boolean, Column, DECIMAL, DateTime, Float, ForeignKey, Integer, LargeBinary, String, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -222,7 +222,7 @@ class Order(Base):
     ShipCountry = Column(String(8000))
     AmountTotal = Column(DECIMAL)
 
-    Customer = relationship('Customer')
+    Customer = relationship('Customer', lazy='noload')
     Employee = relationship('Employee')
 
     OrderDetailList = relationship("OrderDetail",

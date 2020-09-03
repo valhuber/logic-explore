@@ -1,7 +1,10 @@
+import sqlalchemy_utils
+
 import nw.nw_logic.models as models
 from logic_engine.util import row_prt
 from nw.nw_logic import session  # opens db, activates logic listener <--
 
+cls = sqlalchemy_utils.functions.get_class_by_table(models.Base, "Product", data=None)
 
 # Add Order - works
 pre_cust = session.query(models.Customer).filter(models.Customer.Id == "ALFKI").one()

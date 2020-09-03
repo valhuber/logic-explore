@@ -15,15 +15,16 @@ class Singleton(type):
         return cls._instances[cls]
 
 
-class RuleBank(object):
-    __metaclass__ = Singleton
+class RuleBank(metaclass=Singleton):
     """
     scans for rules, creates the logic_repository
     """
 
     _tables = {}  # key = tbl_name, value = list of rules
+    _rb_base = None
     _at = datetime.now()
     _session = None
+    _engine = None
 
     def __init__(self):
         pass

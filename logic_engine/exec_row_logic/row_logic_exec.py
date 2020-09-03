@@ -18,7 +18,7 @@ class RowLogicExec:
 
     def copy_rules(self):
         self.log("copy_rules")
-        copy_rules = rule_bank_withdraw.copy_rules("OrderDetail")
+        copy_rules = rule_bank_withdraw.copy_rules(self.logic_row.name)
         for role_name, copy_rules_for_table in copy_rules.items():
             logic_row = self.logic_row
             if logic_row.ins_upd_dlt == "ins" or logic_row.is_different_parent(role_name):

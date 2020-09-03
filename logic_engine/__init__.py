@@ -22,6 +22,7 @@ import logging
 import sys
 
 # Initialize Logging
+
 logic_logger = logging.getLogger('logic_logger')  # for users
 logic_logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler(sys.stdout)
