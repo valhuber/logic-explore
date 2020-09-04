@@ -1,5 +1,6 @@
 from logic_engine.exec_row_logic.logic_row import LogicRow
 from logic_engine.rule_bank import rule_bank_withdraw
+from logic_engine.rule_type.formula import Formula
 
 
 class RowLogicExec:
@@ -27,7 +28,10 @@ class RowLogicExec:
                     each_copy_rule.execute(self.logic_row, parent_logic_row)
 
     def formula_rules(self):
-        self.log("formula_rules")
+        self.log("formula_rules")  # TODO (big) execute in dependency order
+        formula_rules = rule_bank_withdraw.rules_of_class(self.logic_row.name, Formula)
+        for each_formula in formula_rules:
+            each_formula.execute(self.logic_row)
 
     def early_actions(self):
         self.log("early_actions")

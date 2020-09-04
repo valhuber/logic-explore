@@ -1,3 +1,5 @@
+from typing import Callable
+
 from sqlalchemy.ext.declarative import declarative_base
 
 from logic_engine.rule_type.constraint import Constraint
@@ -43,7 +45,7 @@ class Logic:
         Constraint(validate, calling)  # --> load_logic
 
     @staticmethod
-    def formula_rule(derive: str, calling: str):
+    def formula_rule(derive: str, calling: Callable):
         """
         Formulas declare column value, based on current and parent rows
         Parent changes are propagated to child row(s)
