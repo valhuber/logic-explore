@@ -30,28 +30,15 @@ class LogicRow:
         self.table_meta = row.metadata.tables[type(self.row).__name__]
         self.inspector = Inspector.from_engine(self.engine)
 
-    def get_class_by_tablename(self, tablename):
-        """Return class reference mapped to table.
-
-        :param tablename: String with name of table.
-        :return: Class reference or None.
-        """
-        # https://stackoverflow.com/questions/11668355/sqlalchemy-get-model-from-table-name-this-may-imply-appending-some-function-to
-        sqlalchemy_base = self.some_base
-        models = sqlalchemy_base._decl_class_registry  # FIXME - it's empty
-        for c in models.values():
-            if hasattr(c, '__tablename__') and c.__tablename__ == tablename:
-                return c
-
     def make_copy(self, a_row: base) -> base:
         result_class = a_row.__class__
         result = result_class()
         row_mapper = object_mapper(result)
-        for each_attr in row_mapper.attrs:  # TODO do not process references
+        for each_attr in row_mapper.attrs:  # TODO skip object references
             setattr(result, each_attr.key, getattr(a_row, each_attr.key))
         return result
 
-    def get_parent(self, role_name: str):
+    def get_parent_logic_row(self, role_name: str):  # FIXME why not -> LogicRow?
         my_mapper = object_mapper(self.row)
         role_def = my_mapper.relationships.get(role_name)
         if role_def is None:
@@ -64,7 +51,7 @@ class LogicRow:
         parent_row = self.session.query(parent_class).get(parent_key)
         old_parent = self.make_copy(parent_row)
         parent_logic_row = LogicRow(row=parent_row, old_row=old_parent, nest_level=0, ins_upd_dlt="*")
-        return parent_logic_row  # FIXME placeholder, implementation required
+        return parent_logic_row
 
     def is_different_parent(self, role_name: str) -> bool:
         return False # FIXME placeholder, implementation required
@@ -99,11 +86,10 @@ class LogicRow:
             old_value = value
             if self.old_row is not None:
                 old_value = getattr(self.old_row, each_col_name)
-            if value != str(old_value):
+            if value != old_value:
                 result += ' [' + str(old_value) + '-->]'
             if isinstance(value, str):
                 result += value
             else:
                 result += str(value)
         return result  # str(my_dict)
-
