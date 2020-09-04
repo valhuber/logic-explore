@@ -22,11 +22,9 @@ class RowLogicExec:
         for role_name, copy_rules_for_table in copy_rules.items():
             logic_row = self.logic_row
             if logic_row.ins_upd_dlt == "ins" or logic_row.is_different_parent(role_name):
-                parent = logic_row.get_parent_logic_row(role_name)
+                parent_logic_row = logic_row.get_parent_logic_row(role_name)
                 for each_copy_rule in copy_rules_for_table:
-                    each_column_name = each_copy_rule._column
-                    each_column_value = getattr(parent.row, each_copy_rule._from_column)
-                    setattr(self.logic_row.row, each_column_name, each_column_value)
+                    each_copy_rule.execute(self.logic_row, parent_logic_row)
 
     def formula_rules(self):
         self.log("formula_rules")

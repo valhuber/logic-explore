@@ -1,3 +1,4 @@
+from logic_engine.exec_row_logic.logic_row import LogicRow
 from logic_engine.rule_bank.rule_bank import RuleBank
 from logic_engine.rule_type.derivation import Derivation
 
@@ -11,6 +12,10 @@ class Copy(Derivation):
         self._from_column = names[1]
         rb = RuleBank()
         rb.deposit_rule(self)
+
+    def execute(self, child_logic_row: LogicRow, parent_logic_row: LogicRow):
+        each_column_value = getattr(parent_logic_row.row, self._from_column)
+        setattr(child_logic_row.row, self._column, each_column_value)
 
     def __str__(self):
         return super().__str__() + \
