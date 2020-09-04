@@ -2,6 +2,7 @@ import sqlalchemy
 import sqlalchemy_utils
 from sqlalchemy.ext.declarative import base
 from sqlalchemy.engine.reflection import inspection, Inspector
+from sqlalchemy.orm import object_mapper
 
 from logic_engine.rule_bank.rule_bank import RuleBank
 from sqlalchemy.ext.declarative import declarative_base
@@ -42,27 +43,28 @@ class LogicRow:
             if hasattr(c, '__tablename__') and c.__tablename__ == tablename:
                 return c
 
-    def get_parent(self, role_name: str):
-        # no, table obj, not name
-        # sqlalchemy_utils.functions.get_tables(mixed)
-        cls = sqlalchemy_utils.functions.get_class_by_table(base, role_name, data=None)
+    def make_copy(self, a_row: base) -> base:
+        result_class = a_row.__class__
+        result = result_class()
+        row_mapper = object_mapper(result)
+        for each_attr in row_mapper.attrs:  # TODO do not process references
+            setattr(result, each_attr.key, getattr(a_row, each_attr.key))
+        return result
 
-        # https://docs.sqlalchemy.org/en/13/core/reflection.html#fine-grained-reflection-with-inspector
-        f_keys = sqlalchemy.engine.reflection.Inspector.get_foreign_keys(self.inspector, self.name)
-        role_fkey = None
-        for each_fkey in f_keys:
-            key_name = each_fkey.get('name')
-            if key_name is None:  # FIXME just guessing about fkey.name
-                key_name = each_fkey.get('referred_table')
-            if key_name == role_name:
-                role_fkey = each_fkey
-                break
-        if role_fkey is None:
-            raise Exception("logic_row.get_parent cannot find role " + role_name)
-        # post_cust = session.query(models.Customer).filter(models.Customer.Id == "ALFKI").one()
-        parent_name = role_name  # FIXME wrong
-        parent_class = self.get_class_by_tablename(role_name)
-        return self  # FIXME placeholder, implementation required
+    def get_parent(self, role_name: str):
+        my_mapper = object_mapper(self.row)
+        role_def = my_mapper.relationships.get(role_name)
+        if role_def is None:
+            raise Exception("FIXME invalid role name")
+        parent_key = {}
+        for each_child_col, each_parent_col in role_def.local_remote_pairs:
+            parent_key[each_parent_col.name] = getattr(self.row, each_child_col.name)
+        parent_class = role_def.entity.class_
+        # https://docs.sqlalchemy.org/en/13/orm/query.html#the-query-object
+        parent_row = self.session.query(parent_class).get(parent_key)
+        old_parent = self.make_copy(parent_row)
+        parent_logic_row = LogicRow(row=parent_row, old_row=old_parent, nest_level=0, ins_upd_dlt="*")
+        return parent_logic_row  # FIXME placeholder, implementation required
 
     def is_different_parent(self, role_name: str) -> bool:
         return False # FIXME placeholder, implementation required
