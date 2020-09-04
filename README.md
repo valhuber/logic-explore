@@ -1,4 +1,6 @@
-# logic-explore
+# OLD VERSION
+
+Please [go here](https://github.com/valhuber/python-rules).
 
 Explore sqlalchemy, events, and declarative logic with a running example.   Focus:
 * db-generated keys
