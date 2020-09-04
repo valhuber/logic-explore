@@ -3,6 +3,7 @@ from sqlalchemy.orm import object_mapper
 from logic_engine.exec_row_logic.logic_row import LogicRow
 from logic_engine.exec_row_logic.parent_role_adjuster import ParentRoleAdjuster
 from logic_engine.rule_bank import rule_bank_withdraw
+from logic_engine.rule_type.constraint import Constraint
 from logic_engine.rule_type.formula import Formula
 
 
@@ -37,7 +38,16 @@ class RowLogicExec:
             each_formula.execute(self.logic_row)
 
     def early_actions(self):
-        self.log("early_actions")
+        self.log("early_actions - not impl")
+
+    def constraints(self):
+        self.log("constraints")
+        constraint_rules = rule_bank_withdraw.rules_of_class(self.logic_row.name, Constraint)
+        for each_constraint in constraint_rules:
+            each_constraint.execute(self.logic_row)
+
+    def cascade_to_children(self):
+        self.log("cascades")
 
     def adjust_parent_aggregates(self):
         self.log("adjust_parent_aggregates")
@@ -55,9 +65,13 @@ class RowLogicExec:
         self.copy_rules()
         self.formula_rules()
         self.adjust_parent_aggregates()
+        self.constraints()
+        self.cascade_to_children()
 
     def insert(self):
         self.early_actions()
         self.copy_rules()
         self.formula_rules()
         self.adjust_parent_aggregates()
+        self.constraints()
+        # self.cascade_to_children()
