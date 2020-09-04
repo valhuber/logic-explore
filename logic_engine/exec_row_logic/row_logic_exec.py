@@ -1,4 +1,7 @@
+from sqlalchemy.orm import object_mapper
+
 from logic_engine.exec_row_logic.logic_row import LogicRow
+from logic_engine.exec_row_logic.parent_role_adjuster import ParentRoleAdjuster
 from logic_engine.rule_bank import rule_bank_withdraw
 from logic_engine.rule_type.formula import Formula
 
@@ -38,13 +41,14 @@ class RowLogicExec:
 
     def adjust_parent_aggregates(self):
         self.log("adjust_parent_aggregates")
-        """
-            for each_parent_role
-                parent_adjuster = ParentRoleAdjuster(self, each_parent_role)  # NB - 1 parent save for N sums/counts
-                for each_aggregate in each_parent_role
-                    each_aggregate.adjust_parent(adjuster)  # adjusts each_parent iff req'd
-                parent_adjuster.save_altered_parents()
-        """
+        aggregate_rules = rule_bank_withdraw.aggregate_rules(self.logic_row.name)
+        for each_parent_role, each_aggr_list in aggregate_rules.items():
+            print(each_parent_role)
+            parent_adjuster = ParentRoleAdjuster(child_logic_row=self,
+                                                 parent_role_name=each_parent_role)
+            for each_aggregate in each_aggr_list:
+                each_aggregate.adjust_parent(parent_adjuster)  # adjusts each_parent iff req'd
+            parent_adjuster.save_altered_parents()
 
     def update(self):
         self.early_actions()
